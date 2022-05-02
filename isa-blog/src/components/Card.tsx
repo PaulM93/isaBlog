@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
+import { motion } from "framer-motion"
+import { Link } from "gatsby"
 import {
   Container,
   Image,
@@ -8,83 +10,146 @@ import {
   Flex,
   Heading,
   Text,
-  Avatar,
   Icon,
   GridItem,
   HStack,
 } from "@chakra-ui/react"
 import { FiClock } from "react-icons/fi"
+//Components
+import Avatar from "./Avatar"
 
-export default function Card() {
+interface CardProps {
+  title: string
+  fronmatter: object
+  post: object
+  timeToRead: number
+}
+
+export default function Card({
+  post: {
+    frontmatter: {
+      title,
+      date,
+      hashtags,
+      author,
+      slug,
+      thumb,
+      avatar: {
+        childImageSharp: {
+          fluid: { src: src },
+        },
+      },
+    },
+    timeToRead,
+  },
+}: CardProps) {
+  const thumbImageSrc = thumb
+  const [whileHover, setWhileHover] = useState(false)
+
   const readTime = (
     <Flex align="center">
       <Icon as={FiClock} fontSize="xs" />
       <Text fontSize={"xs"} ml={1}>
-        5 min read
+        {timeToRead} min read
       </Text>
     </Flex>
   )
 
-  const hashTagArr = ["Comida", "Mexico", "CDMX"]
-  const hashTags = (
+  // console.log("slig", thumb.childImageSharp.fluid.src)
+
+  const hashTagMarkup = (
     <Box>
       <HStack>
-        {hashTagArr.map(i => (
-          <Text fontFamily={"lora"} fontSize="sm">
-            #{i}
-          </Text>
-        ))}
+        {hashtags
+          ? hashtags.map(i => (
+              <Text fontFamily={"lora"} fontSize="sm" key={i}>
+                #{i}
+              </Text>
+            ))
+          : null}
       </HStack>
     </Box>
   )
 
   return (
-    <Flex
-      boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px"}
-      bg="white"
-      borderRadius={5}
-      h="400px"
-      flexDir="column"
-      minWidth="100%"
+    <motion.div
+      onHoverStart={() => setWhileHover(true)}
+      onHoverEnd={() => setWhileHover(false)}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+      exit={{ opacity: 0, transition: { duration: 0.3 } }}
+      style={{
+        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        borderRadius: "10px",
+      }}
+      whileHover={{
+        scale: 1.02,
+        transition: {
+          type: "spring",
+          duration: 0.4,
+        },
+        color: "#B83280",
+        boxShadow: "rgba(149, 157, 165, 0.4) 0px 8px 24px",
+        borderRadius: "10px 20px 23px 15px",
+      }}
     >
-      <Box w="100%">
-        <Image
-          borderTopLeftRadius={5}
-          borderTopRightRadius={5}
-          h="200px"
-          objectFit="cover"
-          w="100%"
-          src="https://bit.ly/dan-abramov"
-          alt="Dan Abramov"
-        />
-      </Box>
-      <Flex p={5} flexDir="column" height="100%" justify="space-between">
-        <Box>
-          <Flex align="center">
-            <Avatar size="sm" src="https://bit.ly/kent-c-dodds" />
-            <Box ml={2}>
-              <Text fontFamily={"Lora"} fontWeight="700" fontSize={"xs"}>
-                Paul Marley
-              </Text>
-              <Text
-                fontFamily={"Lora"}
-                fontSize={"xs"}
-                textTransform="capitalize"
-              >
-                Mar 27 2022
-              </Text>
-            </Box>
-          </Flex>
-          <Box mt={4}>
-            <Heading fontFamily={"Nunito"} fontWeight="900" size="md" m={0}>
-              Que tome en la CDMX?
-            </Heading>
-            {readTime}
+      <Link to={`/${slug}`}>
+        <Flex
+          cursor={"pointer"}
+          bg="white"
+          h="400px"
+          flexDir="column"
+          minWidth="100%"
+        >
+          <Box w="100%">
+            <Image
+              borderTopLeftRadius={5}
+              borderTopRightRadius={5}
+              h="200px"
+              objectFit="cover"
+              objectPosition="top"
+              w="100%"
+              src={thumbImageSrc}
+              alt="Dan Abramov"
+            />
           </Box>
-        </Box>
-        {/* Hashtags  */}
-        {hashTags}
-      </Flex>
-    </Flex>
+          <Flex h="100%" position="relative">
+            <Flex w={"5px"} h="100%" align="flex-end" position="absolute">
+              <motion.div
+                style={{
+                  width: "100%",
+                  border: "none",
+                  height: "0%",
+                  background: "#B83280",
+                  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                }}
+                animate={{
+                  height: whileHover ? "100%" : "0%",
+                  transition: { duration: 1, delay: 0.1 },
+                }}
+              />
+            </Flex>
+            <Flex p={5} flexDir="column" height="100%" justify="space-between">
+              <Box>
+                <Avatar src={src} author={author} date={date} />
+                <Box mt={4}>
+                  <Heading
+                    fontFamily={"Nunito"}
+                    fontWeight="900"
+                    size="md"
+                    mb={1}
+                  >
+                    {title}
+                  </Heading>
+                  {readTime}
+                </Box>
+              </Box>
+              {/* Hashtags  */}
+              {hashTagMarkup}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Link>
+    </motion.div>
   )
 }

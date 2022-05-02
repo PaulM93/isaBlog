@@ -1,40 +1,27 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Un Cafe con Isa`,
     author: {
-      name: `Kyle Mathews`,
+      name: `Isa Arrautt`,
       summary: `who lives and works in San Francisco building useful things.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `Un vlog de viajes, comida y libros`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
     social: {
       twitter: `kylemathews`,
     },
   },
   plugins: [
+    // `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
+        path: `${__dirname}/content`,
         name: `blog`,
       },
     },
-    {
-      resolve: "@chakra-ui/gatsby-plugin",
-      options: {
-        /**
-         * @property {boolean} [resetCSS=true]
-         * if false, this plugin will not use `<CSSReset />
-         */
-        resetCSS: true,
-        /**
-         * @property {boolean} [isUsingColorMode=true]
-         * if false, this plugin will not use <ColorModeProvider />
-         */
-        isUsingColorMode: true,
-      },
-    },
+    "@chakra-ui/gatsby-plugin",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -131,7 +118,7 @@ module.exports = {
         name: `Gatsby Starter Blog`,
         short_name: `GatsbyJS`,
         start_url: `/`,
-        background_color: `#ffffff`,
+        // background_color: `#ffffff`,
         // This will impact how browsers show your PWA/website
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
