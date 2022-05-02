@@ -20,7 +20,7 @@ import Avatar from "./Avatar"
 
 interface CardProps {
   title: string
-  fronmatter: object
+  frontmatter: object
   post: object
   timeToRead: number
 }
@@ -33,6 +33,7 @@ export default function Card({
       hashtags,
       author,
       slug,
+      category,
       thumb,
       avatar: {
         childImageSharp: {
@@ -43,7 +44,7 @@ export default function Card({
     timeToRead,
   },
 }: CardProps) {
-  const thumbImageSrc = thumb
+  const thumbImageSrc = thumb.childImageSharp.fluid.src
   const [whileHover, setWhileHover] = useState(false)
 
   const readTime = (
@@ -55,7 +56,7 @@ export default function Card({
     </Flex>
   )
 
-  // console.log("slig", thumb.childImageSharp.fluid.src)
+  console.log("slig", thumb.childImageSharp.fluid.src)
 
   const hashTagMarkup = (
     <Box>
@@ -93,7 +94,7 @@ export default function Card({
         borderRadius: "10px 20px 23px 15px",
       }}
     >
-      <Link to={`/${slug}`}>
+      <Link to={`/${category}/${slug}`}>
         <Flex
           cursor={"pointer"}
           bg="white"

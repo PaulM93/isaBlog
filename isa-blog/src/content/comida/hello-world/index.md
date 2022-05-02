@@ -4,8 +4,9 @@ date: "2015-05-01T22:12:03.284Z"
 author: Isa Arrautt
 description: "Hello World"
 slug: hello-world
-avatar: ../../../imagesthumbs/profile-pic.png
-thumb: ../../../imagesthumbs/profile-pic.png
+avatar: ../../../images/thumbs/profile-pic.png
+thumb: ../../../images/thumbs/profile-pic.png
+category: comida
 hashtags: [Comida, Mexico, CDMX]
 ---
 

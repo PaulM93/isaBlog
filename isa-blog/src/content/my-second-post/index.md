@@ -3,8 +3,9 @@ title: My Second Post!
 date: "2015-05-06T23:46:37.121Z"
 author: Isa Arrautt
 description: "Hello World"
-avatar: ../../../images/thumbs/profile-pic.png
-thumb: ../../../images/thumbs/profile-pic.png
+avatar: ../../images/thumbs/profile-pic.png
+thumb: ../../images/thumbs/profile-pic.png
+category: viajes
 slug: my-second-post
 hashtags: [Comida, Mexico, CDMX]
 ---

@@ -23,8 +23,9 @@ import CardButtons from "../components/CardButtons"
 import Footer from "../components/Footer"
 
 const BlogIndex = ({ data, location }) => {
+  console.log(data)
   // const siteTitle = data.site.siteMetadata?.title || `Title`
-  // const posts: Object = data.allMarkdownRemark.nodes
+  const posts: Object = data.allMarkdownRemark.nodes
 
   // console.log(data.allMarkdownRemark.nodes)
 
@@ -48,12 +49,12 @@ const BlogIndex = ({ data, location }) => {
   // }
   // const images = data.blogPosts.nodes.frontMatter.thumb
 
-  // const blogCards = posts.map(post => (
-  //   <GridItem minWidth="100%">
-  //     <Card post={post} />
-  //   </GridItem>
-  // ))
-  // posts.map(post => console.log(post))
+  const blogCards = posts.map(post => (
+    <GridItem minWidth="100%">
+      <Card post={post} />
+    </GridItem>
+  ))
+  posts.map(post => console.log(post))
 
   return (
     <Layout location={location}>
@@ -73,7 +74,7 @@ const BlogIndex = ({ data, location }) => {
             ]}
             gap={4}
           >
-            {/* {blogCards} */}
+            {blogCards}
           </Grid>
         </Box>
       </Flex>
@@ -83,34 +84,35 @@ const BlogIndex = ({ data, location }) => {
 
 export default BlogIndex
 
-// export const blogPosts = graphql`
-//   query BlogData {
-//     allMarkdownRemark {
-//       nodes {
-//         frontmatter {
-//           date(formatString: "LL")
-//           description
-//           author
-//           hashtags
-//           slug
-//           title
-//           thumb {
-//             childImageSharp {
-//               fluid {
-//                 src
-//               }
-//             }
-//           }
-//           avatar {
-//             childImageSharp {
-//               fluid {
-//                 src
-//               }
-//             }
-//           }
-//         }
-//         timeToRead
-//       }
-//     }
-//   }
-// `
+export const blogPosts = graphql`
+  query BlogPosts {
+    allMarkdownRemark {
+      nodes {
+        frontmatter {
+          category
+          author
+          description
+          date(formatString: "LL")
+          hashtags
+          slug
+          title
+          avatar {
+            childImageSharp {
+              fluid {
+                src
+              }
+            }
+          }
+          thumb {
+            childImageSharp {
+              fluid {
+                src
+              }
+            }
+          }
+        }
+        timeToRead
+      }
+    }
+  }
+`

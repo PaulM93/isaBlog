@@ -1,30 +1,53 @@
-// const path = require("path")
+const path = require("path")
+import {graphql} from "gatsby"
 
-// exports.createPages = async ({ graphql, actions }) => {
-//   //Naming pages with the slug
-//   const { data } = await graphql(`
-//     query MyQuery {
-//       allMarkdownRemark {
-//         nodes {
-//           frontmatter {
-//             slug
-//           }
-//         }
-//       }
-//     }
-//   `)
+exports.createPages = async ({ actions }) => {
+  //Naming pages with the slug
+  const blogPost = path.resolve("./src/templates/blog-post.js")
+  // const { data } = await graphql(`
+  //   query MyQuery {
+  //     allMarkdownRemark {
+  //       nodes {
+  //         frontmatter {
+  //           slug
+  //           category
+  //         }
+  //       }
+  //     }
+  //   }
+  // `
+  const result = await graphql(
+    `
+    {
+      blogPosts: allMarkdownRemark(
+        filter: {fileAbsolutePath: {regex: "/\/blog\//"}}
+      ) {
+        nodes {
+          id
+          frontmatter {
+            slug
+          }
+        }
+      }`
+  )
+  const posts = result.data.blogPosts.nodes
+  console.log("node", posts)
 
-//   data.allMarkdownRemark.nodes.forEach(node => {
-//     actions.createPage({
-//       path: node.frontmatter.slug,
-//       path: "blog/" + node.frontmatter.slug,
-//       //Import template with absolute path -- generate with path.resolve
-//       component: path.resolve("./src/templates/blog-post.js"),
-//       //We pass the slug to the template
-//       context: { slug: node.frontmatter.slug },
-//     })
-//   })
-// }
+  if(posts.lengt)
+
+  // data.allMarkdownRemark.nodes.forEach(node => {
+  //   actions.createPage({
+  //     // path: node.frontmatter.slug,
+  //     path: `${node.frontmatter.category}/` + node.frontmatter.slug,
+  //     //Import template with absolute path -- generate with path.resolve
+  //     component: blogPost,
+  //     //We pass the slug to the template
+  //     context: {
+  //       slug: `${node.frontmatter.category}/` + node.frontmatter.slug,
+  //     },
+  //   })
+  // })
+}
 
 // const path = require(`path`)
 // const { createFilePath } = require(`gatsby-source-filesystem`)

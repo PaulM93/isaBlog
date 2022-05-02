@@ -15,10 +15,19 @@ module.exports = {
     // `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     {
+      //All files
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content`,
+        path: `${__dirname}/src/content`,
         name: `blog`,
+      },
+    },
+    {
+      //Comida files
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/content/comida`,
+        name: `comida`,
       },
     },
     "@chakra-ui/gatsby-plugin",
