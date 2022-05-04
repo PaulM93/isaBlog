@@ -1,53 +1,104 @@
 const path = require("path")
-import {graphql} from "gatsby"
 
-exports.createPages = async ({ actions }) => {
-  //Naming pages with the slug
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
   const blogPost = path.resolve("./src/templates/blog-post.js")
-  // const { data } = await graphql(`
-  //   query MyQuery {
-  //     allMarkdownRemark {
-  //       nodes {
-  //         frontmatter {
-  //           slug
-  //           category
-  //         }
-  //       }
-  //     }
-  //   }
-  // `
-  const result = await graphql(
+
+  return graphql(
     `
-    {
-      blogPosts: allMarkdownRemark(
-        filter: {fileAbsolutePath: {regex: "/\/blog\//"}}
-      ) {
-        nodes {
-          id
-          frontmatter {
-            slug
+      query MyQuery {
+        allContentfulPost {
+          edges {
+            node {
+              author
+              createdAt(formatString: "LL")
+              slug
+              subtitle
+              title
+              content {
+                raw
+              }
+              image {
+                gatsbyImageData(layout: FIXED, quality: 90, width: 500)
+              }
+            }
           }
         }
-      }`
-  )
-  const posts = result.data.blogPosts.nodes
-  console.log("node", posts)
+      }
+    `
+  ).then(result => {
+    if (result.errors) {
+      throw result.errors
+    }
 
-  if(posts.lengt)
+    //Create Blog Post pages -- access the page nodes
+    const posts = result.data.allContentfulPost.edges
 
-  // data.allMarkdownRemark.nodes.forEach(node => {
-  //   actions.createPage({
-  //     // path: node.frontmatter.slug,
-  //     path: `${node.frontmatter.category}/` + node.frontmatter.slug,
-  //     //Import template with absolute path -- generate with path.resolve
-  //     component: blogPost,
-  //     //We pass the slug to the template
-  //     context: {
-  //       slug: `${node.frontmatter.category}/` + node.frontmatter.slug,
-  //     },
-  //   })
-  // })
+    if (posts.length > 0) {
+      posts.forEach((post, index) => {
+        const previousPostId = index === 0 ? null : posts[index - 1].id
+        const nextPostId =
+          index === posts.length - 1 ? null : posts[index + 1].id
+
+        createPage({
+          path: post.node.slug, //we can see this info in graphql
+          component: blogPost,
+          context: {
+            slug: post.node.slug,
+            previousPostId,
+            nextPostId,
+          },
+        })
+      })
+    }
+  })
 }
+// exports.createPages = async ({ actions }) => {
+//   //Naming pages with the slug
+//   const blogPost = path.resolve("./src/templates/blog-post.js")
+//   // const { data } = await graphql(`
+//   //   query MyQuery {
+//   //     allMarkdownRemark {
+//   //       nodes {
+//   //         frontmatter {
+//   //           slug
+//   //           category
+//   //         }
+//   //       }
+//   //     }
+//   //   }
+//   // `
+//   const result = await graphql(
+//     `
+//     {
+//       blogPosts: allMarkdownRemark(
+//         filter: {fileAbsolutePath: {regex: "/\/blog\//"}}
+//       ) {
+//         nodes {
+//           id
+//           frontmatter {
+//             slug
+//           }
+//         }
+//       }`
+//   )
+//   const posts = result.data.blogPosts.nodes
+//   console.log("node", posts)
+
+// if(posts.lengt)
+
+// data.allMarkdownRemark.nodes.forEach(node => {
+//   actions.createPage({
+//     // path: node.frontmatter.slug,
+//     path: `${node.frontmatter.category}/` + node.frontmatter.slug,
+//     //Import template with absolute path -- generate with path.resolve
+//     component: blogPost,
+//     //We pass the slug to the template
+//     context: {
+//       slug: `${node.frontmatter.category}/` + node.frontmatter.slug,
+//     },
+//   })
+// })
 
 // const path = require(`path`)
 // const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -91,22 +142,6 @@ exports.createPages = async ({ actions }) => {
 //   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
 //   // `context` is available in the template as a prop and as a variable in GraphQL
 
-//   if (posts.length > 0) {
-//     posts.forEach((post, index) => {
-//       const previousPostId = index === 0 ? null : posts[index - 1].id
-//       const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
-//       createPage({
-//         path: post.fields.slug,
-//         component: blogPost,
-//         context: {
-//           id: post.id,
-//           previousPostId,
-//           nextPostId,
-//         },
-//       })
-//     })
-//   }
 // }
 
 // exports.onCreateNode = ({ node, actions, getNode }) => {

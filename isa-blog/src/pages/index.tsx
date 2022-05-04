@@ -22,39 +22,24 @@ import SocialIcons from "../components/SocialIcons"
 import CardButtons from "../components/CardButtons"
 import Footer from "../components/Footer"
 
-const BlogIndex = ({ data, location }) => {
-  console.log(data)
-  // const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts: Object = data.allMarkdownRemark.nodes
+interface BlogIndexProps {
+  data: { allContentfulPost: { edges: [{}] } }
+}
 
-  // console.log(data.allMarkdownRemark.nodes)
+const BlogIndex = ({
+  data: {
+    allContentfulPost: { edges },
+  },
+}: BlogIndexProps) => {
+  const blogPosts: [{}] = edges
 
-  // const { title, description } = data.allMarkdownRemark.nodes.frontMatter
-  // console.log(title)
-  // console.log(description)
+  console.log(blogPosts)
 
-  // const posts = data.blogPosts.nodes
-  // console.log(posts)
-
-  // if (posts.length === 0) {
-  //   return (
-  //     <Layout location={location} key>
-  //       <p>
-  //         No blog posts found. Add markdown posts to "content/blog" (or the
-  //         directory you specified for the "gatsby-source-filesystem" plugin in
-  //         gatsby-config.js).
-  //       </p>
-  //     </Layout>
-  //   )
-  // }
-  // const images = data.blogPosts.nodes.frontMatter.thumb
-
-  const blogCards = posts.map(post => (
+  const blogCards = blogPosts.map(post => (
     <GridItem minWidth="100%">
       <Card post={post} />
     </GridItem>
   ))
-  posts.map(post => console.log(post))
 
   return (
     <Layout location={location}>
@@ -86,32 +71,23 @@ export default BlogIndex
 
 export const blogPosts = graphql`
   query BlogPosts {
-    allMarkdownRemark {
-      nodes {
-        frontmatter {
-          category
-          author
-          description
-          date(formatString: "LL")
-          hashtags
-          slug
+    allContentfulPost {
+      edges {
+        node {
+          subtitle
           title
-          avatar {
-            childImageSharp {
-              fluid {
-                src
-              }
-            }
+          slug
+          createdAt(formatString: "LL")
+          author
+          image {
+            gatsbyImageData(width: 300, resizingBehavior: FILL)
           }
-          thumb {
-            childImageSharp {
-              fluid {
-                src
-              }
+          avatar {
+            avatarImage {
+              gatsbyImageData(width: 30, resizingBehavior: FILL)
             }
           }
         }
-        timeToRead
       }
     }
   }

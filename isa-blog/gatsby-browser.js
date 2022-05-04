@@ -1,7 +1,4 @@
-import React from "react"
-import ReactDOM from "react-dom"
-
-import { AnimatePresence } from "framer-motion"
+// import { AnimatePresence } from "framer-motion"
 // custom typefaces
 import "@fontsource/lora"
 import "@fontsource/lora/500.css"

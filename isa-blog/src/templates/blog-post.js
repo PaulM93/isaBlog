@@ -20,12 +20,12 @@ import {
 import Layout from "../components/layout"
 import Avatar from "../components/Avatar"
 
-export default function post({ data }) {
+export default function Post({ pageQuery }) {
   //   //Retrieving html data
+  console.log(pageQuery)
   // const { html } = data.markdownRemark
   // const { title, author, date, category, hashtags, avatar, thumb } =
   //   data.markdownRemark.frontmatter
-  console.log(data)
 
   return (
     <>
@@ -33,6 +33,21 @@ export default function post({ data }) {
     </>
   )
 }
+
+const pageQuery = graphql`
+  query MyQuery {
+    contentfulPost(slug: { eq: $slug }) {
+      author
+      createdAt(formatString: "LL")
+      content {
+        raw
+      }
+      slug
+      subtitle
+      title
+    }
+  }
+`
 
 // import React from "react"
 // import Img from "gatsby-image"
@@ -62,20 +77,5 @@ export default function post({ data }) {
 // }
 
 // //data comes from slug in createPage gatsby-node
-export const data = graphql`
-  query MyQuery($slug: String) {
-    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
-      html
-      frontmatter {
-        title
-        thumb {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
-  }
-`
+
+//we can access the slug slug: {eq: slug} because we passed it in the context gatsby-node

@@ -1,3 +1,10 @@
+const dotenv = require("dotenv")
+
+//dotenv setup
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config()
+}
+
 module.exports = {
   siteMetadata: {
     title: `Un Cafe con Isa`,
@@ -12,8 +19,17 @@ module.exports = {
     },
   },
   plugins: [
-    // `gatsby-plugin-styled-components`,
+    //Contentful setup
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `a695olkb0xo9`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
     `gatsby-plugin-image`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       //All files
       resolve: `gatsby-source-filesystem`,
@@ -30,14 +46,15 @@ module.exports = {
         name: `comida`,
       },
     },
+
     "@chakra-ui/gatsby-plugin",
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `images`,
+    //     path: `${__dirname}/src/images`,
+    //   },
+    // },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -60,8 +77,7 @@ module.exports = {
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+
     // {
     //   resolve: `gatsby-plugin-google-analytics`,
     //   options: {

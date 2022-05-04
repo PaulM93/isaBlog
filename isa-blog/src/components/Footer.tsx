@@ -1,21 +1,9 @@
 import React from "react"
-import {
-  Container,
-  Image,
-  Button,
-  Grid,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Avatar,
-  GridItem,
-  HStack,
-} from "@chakra-ui/react"
+import { Flex, Heading, Text } from "@chakra-ui/react"
 //Components
 import SocialIcons from "./SocialIcons"
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <>
       <Flex
@@ -51,3 +39,4 @@ export default function Footer() {
     </>
   )
 }
+export default Footer

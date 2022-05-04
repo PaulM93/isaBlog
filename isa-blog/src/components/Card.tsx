@@ -1,76 +1,65 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "gatsby"
-import {
-  Container,
-  Image,
-  Button,
-  Grid,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Icon,
-  GridItem,
-  HStack,
-} from "@chakra-ui/react"
+import { Image, Box, Flex, Heading, Text, Icon, HStack } from "@chakra-ui/react"
 import { FiClock } from "react-icons/fi"
 //Components
 import Avatar from "./Avatar"
 
 interface CardProps {
-  title: string
-  frontmatter: object
-  post: object
-  timeToRead: number
+  post: {
+    node: {
+      title: string
+      subtitle: string
+      author: string
+      createdAt: string
+      slug: string
+      image: {
+        gatsbyImageData: {
+          images: {}
+        }
+      }
+      avatar: {
+        gatsbyImageData: {
+          images: {}
+        }
+      }
+    }
+  }
 }
 
 export default function Card({
   post: {
-    frontmatter: {
-      title,
-      date,
-      hashtags,
-      author,
-      slug,
-      category,
-      thumb,
-      avatar: {
-        childImageSharp: {
-          fluid: { src: src },
-        },
-      },
-    },
-    timeToRead,
+    node: { title, subtitle, author, createdAt, slug, avatar, image },
   },
 }: CardProps) {
-  const thumbImageSrc = thumb.childImageSharp.fluid.src
-  const [whileHover, setWhileHover] = useState(false)
+  const [whileHover, setWhileHover] = useState<Boolean>(false)
+  const thumbImage = image.gatsbyImageData.images.fallback.src
+  const avatarImage = avatar.avatarImage.gatsbyImageData.images.fallback.src
+  console.log(avatarImage)
 
-  const readTime = (
-    <Flex align="center">
-      <Icon as={FiClock} fontSize="xs" />
-      <Text fontSize={"xs"} ml={1}>
-        {timeToRead} min read
-      </Text>
-    </Flex>
-  )
+  // const readTime = (
+  //   <Flex align="center">
+  //     <Icon as={FiClock} fontSize="xs" />
+  //     <Text fontSize={"xs"} ml={1}>
+  //       {timeToRead} min read
+  //     </Text>
+  //   </Flex>
+  // )
 
-  console.log("slig", thumb.childImageSharp.fluid.src)
-
-  const hashTagMarkup = (
-    <Box>
-      <HStack>
-        {hashtags
-          ? hashtags.map(i => (
-              <Text fontFamily={"lora"} fontSize="sm" key={i}>
-                #{i}
-              </Text>
-            ))
-          : null}
-      </HStack>
-    </Box>
-  )
+  // const hashTagMarkup = (
+  //   <Box>
+  //     <HStack>
+  //       {hashtags
+  //         ? hashtags.map(i => (
+  //             <Text fontFamily={"lora"} fontSize="sm" key={i}>
+  //               #{i}
+  //             </Text>
+  //           ))
+  //         : null}
+  //     </HStack>
+  //   </Box>
+  // )
 
   return (
     <motion.div
@@ -94,7 +83,7 @@ export default function Card({
         borderRadius: "10px 20px 23px 15px",
       }}
     >
-      <Link to={`/${category}/${slug}`}>
+      <Link to={`${slug}`}>
         <Flex
           cursor={"pointer"}
           bg="white"
@@ -110,7 +99,7 @@ export default function Card({
               objectFit="cover"
               objectPosition="top"
               w="100%"
-              src={thumbImageSrc}
+              src={thumbImage}
               alt="Dan Abramov"
             />
           </Box>
@@ -132,7 +121,7 @@ export default function Card({
             </Flex>
             <Flex p={5} flexDir="column" height="100%" justify="space-between">
               <Box>
-                <Avatar src={src} author={author} date={date} />
+                <Avatar src={avatarImage} author={author} date={createdAt} />
                 <Box mt={4}>
                   <Heading
                     fontFamily={"Nunito"}
@@ -142,11 +131,11 @@ export default function Card({
                   >
                     {title}
                   </Heading>
-                  {readTime}
+                  {/* {readTime} */}
                 </Box>
               </Box>
               {/* Hashtags  */}
-              {hashTagMarkup}
+              {/* {hashTagMarkup} */}
             </Flex>
           </Flex>
         </Flex>
