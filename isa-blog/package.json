@@ -10,6 +10,8 @@
   "dependencies": {
     "@chakra-ui/gatsby-plugin": "^2.0.4",
     "@chakra-ui/react": "^1.8.8",
+    "@contentful/rich-text-react-renderer": "^15.12.1",
+    "@contentful/rich-text-types": "^15.12.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/lora": "^4.5.6",

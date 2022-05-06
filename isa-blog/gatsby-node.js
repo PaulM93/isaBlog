@@ -2,7 +2,7 @@ const path = require("path")
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  const blogPost = path.resolve("./src/templates/blog-post.js")
+  const blogPost = path.resolve("./src/templates/blog-post.tsx")
 
   return graphql(
     `
@@ -39,6 +39,8 @@ exports.createPages = ({ graphql, actions }) => {
         const previousPostId = index === 0 ? null : posts[index - 1].id
         const nextPostId =
           index === posts.length - 1 ? null : posts[index + 1].id
+
+        console.log("THIS IS THE SLUG", post.node.slug)
 
         createPage({
           path: post.node.slug, //we can see this info in graphql
