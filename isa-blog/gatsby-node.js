@@ -15,9 +15,7 @@ exports.createPages = ({ graphql, actions }) => {
               slug
               subtitle
               title
-              content {
-                raw
-              }
+
               image {
                 gatsbyImageData(layout: FIXED, quality: 90, width: 500)
               }
@@ -30,6 +28,10 @@ exports.createPages = ({ graphql, actions }) => {
     if (result.errors) {
       throw result.errors
     }
+
+    // content {
+    //   raw
+    // }
 
     //Create Blog Post pages -- access the page nodes
     const posts = result.data.allContentfulPost.edges
