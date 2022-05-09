@@ -16,7 +16,10 @@ import {
   Input,
   GridItem,
   Avatar,
+  ListItem,
   HStack,
+  OrderedList,
+  UnorderedList,
 } from "@chakra-ui/react"
 //Components
 import Layout from "../components/layout"
@@ -53,13 +56,37 @@ export default function blogPost({ data }) {
         )
       },
       [BLOCKS.HEADING_1]: (node, children) => {
-        return <Heading size="lg">{children}</Heading>
+        return (
+          <Heading size="lg" fontFamily={"Nunito"}>
+            {children}
+          </Heading>
+        )
       },
       [BLOCKS.HEADING_2]: (node, children) => {
-        return <Heading size="md">{children}</Heading>
+        return (
+          <Heading size="md" fontFamily={"Nunito"}>
+            {children}
+          </Heading>
+        )
       },
       [BLOCKS.HEADING_3]: (node, children) => {
-        return <Heading size="sm">{children}</Heading>
+        return (
+          <Heading size="sm" fontFamily={"Nunito"}>
+            {children}
+          </Heading>
+        )
+      },
+      [BLOCKS.LIST_ITEM]: (node, children) => {
+        return <ListItem fontFamily={"Nunito"}>{children}</ListItem>
+      },
+      [BLOCKS.OL_LIST]: (node, children) => {
+        return <OrderedList fontFamily={"Nunito"}>{children}</OrderedList>
+      },
+      [BLOCKS.LIST_ITEM]: (node, children) => {
+        return <UnorderedList fontFamily={"Nunito"}>{children}</UnorderedList>
+      },
+      [BLOCKS.PARAGRAPH]: (node, children) => {
+        return <Text fontFamily={"Nunito"}>{children}</Text>
       },
     },
   }
@@ -73,9 +100,9 @@ export default function blogPost({ data }) {
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
       >
         <Grid w="100%" templateColumns="repeat(8, 1fr)" gap={3}>
-          <GridItem colSpan={[8, 8, 6, 6]} bg="green">
+          <GridItem colSpan={[8, 8, 6, 6]}>
             <Flex width="100%" minHeight="500px" borderRadius={"5px"}>
-              <Flex flexDir={"column"} bg="white" width="100%">
+              <Flex flexDir={"column"} width="100%">
                 <Box w="100%">
                   <Image
                     borderTopLeftRadius={5}
@@ -88,7 +115,7 @@ export default function blogPost({ data }) {
                     alt={slug}
                   />
                 </Box>
-                <Box p={8} bg="white">
+                <Box p={10} bg="white">
                   <Flex align="center" justify="space-between" w="100%" mb={5}>
                     <Heading fontFamily={"Nunito"} fontWeight="900" size="lg">
                       {title}
@@ -102,7 +129,9 @@ export default function blogPost({ data }) {
                     </Flex>
                   </Flex>
                   {/* bodyRichText */}
-                  <Box>{renderRichText(bodyRichText, options)}</Box>
+                  <Box fontFamily={"Nunito"}>
+                    {renderRichText(bodyRichText, options)}
+                  </Box>
                 </Box>
               </Flex>
             </Flex>
@@ -118,11 +147,8 @@ export default function blogPost({ data }) {
                 w="100%"
                 borderRadius="5px"
                 p={5}
-                // background="rgb(184,50,128)"
                 bg="#ffffff"
-                // backgroundImage={"url('../images/melt.svg')"}
                 color={"fafafa"}
-                maxH="250px"
                 ml={2}
                 align="center"
                 justify={"center"}
@@ -151,9 +177,7 @@ export default function blogPost({ data }) {
                 mt={2}
                 borderRadius="5px"
                 p={5}
-                // background="rgb(184,50,128)"
                 bg="#ffffff"
-                // backgroundImage={"url('../images/melt.svg')"}
                 color={"fafafa"}
                 maxH="250px"
                 ml={2}
