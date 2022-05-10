@@ -74,7 +74,6 @@ export const blogPosts = graphql`
     allContentfulPost {
       edges {
         node {
-          subtitle
           title
           slug
           createdAt(formatString: "LL")

@@ -1,8 +1,11 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import { Provider, LikeButton } from "@lyket/react"
 import { renderRichText } from "gatsby-source-contentful/rich-text"
 import { INLINES, BLOCKS, MARKS } from "@contentful/rich-text-types"
+import { Disqus, CommentCount } from "gatsby-plugin-disqus"
 import { motion } from "framer-motion"
+import { useLocation } from "@reach/router"
 import {
   Container,
   Image,
@@ -26,7 +29,6 @@ import Layout from "../components/layout"
 import CardAvatar from "../components/Avatar"
 
 export default function blogPost({ data }) {
-  console.log(data)
   const {
     title,
     author,
@@ -42,6 +44,15 @@ export default function blogPost({ data }) {
     bodyRichText,
   } = data.contentfulPost
 
+  //Disqus comments
+  const location = useLocation()
+  const disqusConfig = {
+    url: location.href,
+    identifier: slug,
+    title: title,
+  }
+
+  //Contentful Rich Text
   const options = {
     renderMark: {
       [MARKS.BOLD]: text => <b className="font-bold">{text}</b>,
@@ -86,7 +97,11 @@ export default function blogPost({ data }) {
         return <UnorderedList fontFamily={"Nunito"}>{children}</UnorderedList>
       },
       [BLOCKS.PARAGRAPH]: (node, children) => {
-        return <Text fontFamily={"Nunito"}>{children}</Text>
+        return (
+          <Text mb={10} color="#51515C" fontSize="md" fontFamily={"Nunito"}>
+            {children}
+          </Text>
+        )
       },
     },
   }
@@ -115,22 +130,37 @@ export default function blogPost({ data }) {
                     alt={slug}
                   />
                 </Box>
-                <Box p={10} bg="white">
-                  <Flex align="center" justify="space-between" w="100%" mb={5}>
+                <Box p={8} bg="white">
+                  <Flex align="center" justify="space-between" w="100%" mb={2}>
                     <Heading fontFamily={"Nunito"} fontWeight="900" size="lg">
                       {title}
                     </Heading>
-                    <Flex align="center">
-                      <CardAvatar
-                        author={name}
-                        src={images.fallback.src}
-                        date={createdAt}
-                      />
-                    </Flex>
+                    <Box fontSize={"14px"} color="green">
+                      <Provider apiKey="pt_67130c06f822ef90712c3ff7033b1f">
+                        <LikeButton
+                          theme={{ primary: "green" }}
+                          id={slug}
+                          hideCounterIfLessThan={3}
+                          component={LikeButton.templates.Twitter}
+                        />
+                      </Provider>
+                    </Box>
+
+                    {/* <CommentCount config={disqusConfig} placeholder={"..."} /> */}
+                  </Flex>
+                  <Flex align="center" mb={10}>
+                    <CardAvatar
+                      author={name}
+                      src={images.fallback.src}
+                      date={createdAt}
+                    />
                   </Flex>
                   {/* bodyRichText */}
                   <Box fontFamily={"Nunito"}>
                     {renderRichText(bodyRichText, options)}
+                  </Box>
+                  <Box mt={20}>
+                    <Disqus config={disqusConfig} />
                   </Box>
                 </Box>
               </Flex>
@@ -223,7 +253,6 @@ export const pageQuery = graphql`
         )
       }
       slug
-      subtitle
       title
       avatar {
         name

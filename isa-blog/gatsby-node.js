@@ -13,9 +13,7 @@ exports.createPages = ({ graphql, actions }) => {
               author
               createdAt(formatString: "LL")
               slug
-              subtitle
               title
-
               image {
                 gatsbyImageData(layout: FIXED, quality: 90, width: 500)
               }
@@ -26,6 +24,7 @@ exports.createPages = ({ graphql, actions }) => {
     `
   ).then(result => {
     if (result.errors) {
+      console.log("Node Error", result.errors)
       throw result.errors
     }
 

@@ -10,15 +10,22 @@ module.exports = {
     title: `Un Cafe con Isa`,
     author: {
       name: `Isa Arrautt`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      summary: `Soy de Colombia`,
     },
     description: `Un vlog de viajes, comida y libros`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `http://localhost:8000/`,
     social: {
       twitter: `kylemathews`,
     },
   },
   plugins: [
+    //Disqus
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: process.env.DISQUS_SHORTNAME,
+      },
+    },
     //Contentful setup
     {
       resolve: `gatsby-source-contentful`,
