@@ -1,11 +1,17 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Link, graphql } from "gatsby"
 import { Provider, LikeButton } from "@lyket/react"
 import { renderRichText } from "gatsby-source-contentful/rich-text"
 import { INLINES, BLOCKS, MARKS } from "@contentful/rich-text-types"
 import { Disqus, CommentCount } from "gatsby-plugin-disqus"
-import { motion } from "framer-motion"
 import { useLocation } from "@reach/router"
+import {
+  motion,
+  useViewportScroll,
+  useSpring,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion"
 import {
   Container,
   Image,
@@ -106,6 +112,35 @@ export default function blogPost({ data }) {
     },
   }
 
+  const [currentPercent, setCurrentPercent] = useState(0)
+  const [currentProgressColor, setCurrentProgressColor] = useState(null)
+  const [progressWidth, setProgressWidth] = useState("0")
+  //Scroll y progress = vertical scroll progres between 0 - 1
+  const { scrollYProgress } = useViewportScroll()
+  const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 })
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100])
+
+  useEffect(
+    () =>
+      yRange.onChange(v => {
+        setCurrentPercent(Math.trunc(yRange.current))
+      }),
+    [yRange]
+  )
+
+  useEffect(() => {
+    console.log("Current", currentPercent)
+    setCurrentProgressColor(
+      currentPercent >= 90
+        ? "#CDFF00"
+        : currentPercent >= 45
+        ? "#31A9D5"
+        : currentPercent >= 20
+        ? "#F2BD1D"
+        : "#FF3B77"
+    )
+  }, [currentPercent])
+
   return (
     <Layout>
       <motion.div
@@ -114,6 +149,16 @@ export default function blogPost({ data }) {
         animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
       >
+        <motion.div
+          style={{
+            background: currentProgressColor,
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: `${currentPercent}%`,
+            height: "20px",
+          }}
+        ></motion.div>
         <Grid w="100%" templateColumns="repeat(8, 1fr)" gap={3}>
           <GridItem colSpan={[8, 8, 6, 6]}>
             <Flex width="100%" minHeight="500px" borderRadius={"5px"}>
@@ -263,13 +308,3 @@ export const pageQuery = graphql`
     }
   }
 `
-
-// import React from "react"
-// import Img from "gatsby-image"
-// //Components
-// import Layout from "../components/layout"
-// import { graphql } from "gatsby"
-
-// //data comes from slug in createPage gatsby-node
-
-//we can access the slug slug: {eq: slug} because we passed it in the context gatsby-node

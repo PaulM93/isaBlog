@@ -44,7 +44,7 @@ const Layout = ({ children }) => {
       <Flex
         flexDir="column"
         marginTop="40px"
-        minH="100vh"
+        // minH="100vh"
         w={["85%", "85%", "85%", "70%"]}
         paddingTop={["20px", "20px", "0px", "0px"]}
         // paddingBottom={["80px", "80px", "0px", "0px"]}
