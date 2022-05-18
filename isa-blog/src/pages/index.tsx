@@ -73,7 +73,7 @@ const BlogIndex = ({
   return (
     // <Layout location={location}>
     <>
-      <Box minH={"200vh"} width="100%">
+      <Box minH={"300vh"} width="100%">
         <Flex h="100px" justify={"center"} w="100%">
           <Box width="100%" height="75vh" position="absolute">
             <motion.div
