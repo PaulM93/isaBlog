@@ -57,13 +57,18 @@ const BlogIndex = ({
 
   console.log("Current", currentPercent)
 
+  const [imagePosition, setImagePosition] = useState(-15)
+
   useEffect(
     () =>
       yRange.onChange(v => {
         setCurrentPercent(100 - Math.trunc(yRange.current))
+        setImagePosition(imagePosition - Math.trunc(yRange.current * 2))
       }),
     [yRange]
   )
+
+  console.log("Image Positon", imagePosition)
 
   return (
     // <Layout location={location}>
@@ -91,15 +96,11 @@ const BlogIndex = ({
           >
             <Heading size="md">Un Cafe con Isa</Heading>
             <HStack>
-              <Text fontSize={"md"}>Home</Text>
-              <Text fontSize={"md"}>About</Text>
-              <Text fontSize={"md"}>Contact</Text>
+              <Button>Home</Button>
+              <Button>About</Button>
+              <Button>Contact</Button>
             </HStack>
-            <HStack>
-              <Text fontSize={"md"}>Home</Text>
-              <Text fontSize={"md"}>About</Text>
-              <Text fontSize={"md"}>Contact</Text>
-            </HStack>
+            <SocialIcons />
           </Flex>
         </Flex>
         <Flex width={"100%"} mt={20} justify="center">
@@ -119,19 +120,50 @@ const BlogIndex = ({
               </Button>
             </Flex>
             <Flex w="50%">
-              <Image
-                w="500px"
-                top={"-15%"}
-                src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt="Dan Abramov"
-                objectFit="cover"
-                height="500px"
-                position={"absolute"}
-              />
+              <motion.div
+                // style={{ position: "absolute", top: `${imagePosition}%` }}
+                style={{ position: "relative" }}
+              >
+                <Image
+                  w="500px"
+                  src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                  alt="Dan Abramov"
+                  objectFit="cover"
+                  height="300px"
+                  // position={"absolute"}
+                />
+              </motion.div>
             </Flex>
           </Flex>
         </Flex>
+        {/* This remains the navBar */}
+        <Flex
+          mt={"80px"}
+          w="100%"
+          flexDir={"column"}
+          align="center"
+          justify="center"
+        >
+          <Flex w="75%" justify="space-between">
+            <Heading size="md">Un Cafe con Isa</Heading>
+            <HStack>
+              <Button>Comida</Button>
+              <Button>Viajes</Button>
+              <Button>Libros</Button>
+            </HStack>
+            <SocialIcons />
+          </Flex>
+          <Flex mt={20} w="75%">
+            <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+              {blogCards}
+              {blogCards}
+              {blogCards}
+              {blogCards}
+            </Grid>
+          </Flex>
+        </Flex>
       </Box>
+      <Footer />
     </>
     // </Layout>
   )

@@ -87,7 +87,7 @@ export default function Card({
         <Flex
           cursor={"pointer"}
           bg="white"
-          h="400px"
+          h="450px"
           flexDir="column"
           minWidth="100%"
         >
@@ -95,7 +95,7 @@ export default function Card({
             <Image
               borderTopLeftRadius={5}
               borderTopRightRadius={5}
-              h="200px"
+              h="250px"
               objectFit="cover"
               objectPosition="top"
               w="100%"
