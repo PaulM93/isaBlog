@@ -5,9 +5,13 @@ import { Flex, Heading, IconButton, Button, HStack } from "@chakra-ui/react"
 //Components
 import SocialButtons from "./SocialIcons"
 import NavButtons from "./NavButtons"
-import { FiChevronDown } from "react-icons/fi"
+import { FiChevronDown, FiChevronLeft } from "react-icons/fi"
 
-export default function NavBar() {
+interface NavBarProps {
+  page: string
+}
+
+export default function NavBar({ page }: NavBarProps) {
   // const { colorMode, toggleColorMode } = useColorMode();
 
   const [shouldShowActions, setShouldShowActions] = useState(false)
@@ -156,21 +160,37 @@ export default function NavBar() {
                 </Heading>
               </motion.div>
               {/* Menu Button  */}
-              <motion.button
-                animate={{
-                  rotate: open ? 180 : 0,
-                  transition: { duration: 0.2 },
-                }}
-              >
-                <IconButton
-                  isRound={open ? false : true}
-                  colorScheme={"purple"}
-                  variant={open ? "solid" : "outline"}
-                  onClick={() => setOpen(!open)}
-                  icon={<FiChevronDown />}
-                  aria-label="open menu"
-                />
-              </motion.button>
+              <HStack>
+                <motion.button
+                  animate={{
+                    rotate: open ? 360 : 0,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <IconButton
+                    isRound={open ? false : true}
+                    variant={"outline"}
+                    onClick={() => setOpen(!open)}
+                    icon={<FiChevronLeft />}
+                    aria-label="open menu"
+                  />
+                </motion.button>
+                <motion.button
+                  animate={{
+                    rotate: open ? 180 : 0,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <IconButton
+                    isRound={open ? false : true}
+                    colorScheme={"purple"}
+                    variant={open ? "solid" : "outline"}
+                    onClick={() => setOpen(!open)}
+                    icon={<FiChevronDown />}
+                    aria-label="open menu"
+                  />
+                </motion.button>
+              </HStack>
             </Flex>
             <motion.div
               initial={{

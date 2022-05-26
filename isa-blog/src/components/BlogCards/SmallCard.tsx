@@ -1,25 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Link } from "gatsby"
-import {
-  motion,
-  useViewportScroll,
-  useSpring,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion"
-import {
-  Container,
-  Image,
-  Button,
-  Grid,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Avatar,
-  GridItem,
-  HStack,
-} from "@chakra-ui/react"
+import { motion } from "framer-motion"
+import { Image, Flex, Heading } from "@chakra-ui/react"
 //Component
 import Tags from "./Tags"
 

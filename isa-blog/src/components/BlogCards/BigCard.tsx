@@ -2,15 +2,7 @@ import React, { useState } from "react"
 //Components
 import SocialIcons from "./SocialIcons"
 import Tags from "./Tags"
-import {
-  Image,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Avatar,
-  HStack,
-} from "@chakra-ui/react"
+import { Image, Box, Flex, Heading, Text, Avatar } from "@chakra-ui/react"
 import { motion } from "framer-motion"
 
 export default function BigCard() {
@@ -18,7 +10,11 @@ export default function BigCard() {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
+      whileHover={{
+        scale: 1.01,
+        transition: { duration: 0.2 },
+        boxShadow: "rgba(0, 0, 0, 0.09) 0px 3px 12px",
+      }}
       style={{ cursor: "pointer", overflow: "hidden", height: "100%" }}
       onHoverStart={() => setWhileHover(true)}
       onHoverEnd={() => setWhileHover(false)}
@@ -34,7 +30,9 @@ export default function BigCard() {
         justify={"space-between"}
       >
         {/* Image  */}
+
         <Image
+          zIndex={10}
           borderRadius="10px"
           src="https://images.pexels.com/photos/6489734/pexels-photo-6489734.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           alt="Dan Abramov"
