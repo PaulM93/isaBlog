@@ -1,89 +1,77 @@
 import React from "react"
+import SocialButtons from "./Navbar/SocialIcons"
 import {
-  Flex,
-  Heading,
-  Image,
   Box,
-  Text,
-  Grid,
-  GridItem,
-  Button,
-  HStack,
+  Flex,
   Divider,
+  Text,
+  VStack,
+  IconButton,
+  Link,
+  Center,
 } from "@chakra-ui/react"
-//Components
-import SocialIcons from "./SocialIcons"
+import { FaFacebookF, FaGithub, FaInstagram } from "react-icons/fa"
 
-const Footer: React.FC = () => {
+export default function Footer() {
+  const socialIcons = [
+    {
+      name: "facebook",
+      val: "https://www.facebook.com/",
+      icon: <FaFacebookF />,
+    },
+    {
+      name: "github",
+      val: "https://github.com/",
+      icon: <FaGithub />,
+    },
+    {
+      name: "instagram",
+      val: "https://www.instagram.com/",
+      icon: <FaInstagram />,
+    },
+  ]
+  const socialMarkup = socialIcons.map(i => (
+    <Link color={"secondary"} href={i.val} isExternal>
+      <IconButton aria-label={i.name} icon={i.icon} isRound />
+    </Link>
+  ))
+
   return (
     <>
-      <Flex height="800px" align="flex-end">
-        <Flex
-          position="relative"
-          width="100%"
-          background="#C8A284"
-          minH="500px"
-          maxH="500px"
-          justify={"center"}
-        >
-          <Grid
-            position={"absolute"}
-            top={"-40%"}
-            height="400px"
-            p={5}
-            borderRadius={20}
-            background="#FAF3ED"
-            templateColumns="repeat(4, 1fr)"
-            gap={4}
-            w="75%"
+      <Flex flexDir={"column"} width="100%" align={"center"} bg="#F3F5F7">
+        <Divider borderColor={"blackAlpha.300"} width="75%" />
+        <Box pb={10} pt={10} w={["85%", "100%"]}>
+          <Flex
+            flexDir="column"
+            alignItems="center"
+            justifyContent="center"
+            position={"relative"}
+            bottom={"0px"}
+            left="0px"
+            pt={5}
+            right="0px"
           >
-            <GridItem>
-              <Image
-                src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt="Dan Abramov"
-                objectFit="cover"
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt="Dan Abramov"
-                objectFit="cover"
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt="Dan Abramov"
-                objectFit="cover"
-              />
-            </GridItem>
-            <GridItem>
-              <Image
-                src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt="Dan Abramov"
-                objectFit="cover"
-              />
-            </GridItem>
-          </Grid>
-          <Flex pt="240px" align="center" width="100%" flexDir={"column"}>
-            <Heading size="md" color="#fafafa" mb={10}>
-              Un Cafe con Isa
-            </Heading>
-            <HStack>
-              <Button>Home</Button>
-              <Button>About me</Button>
-              <Button>Comida</Button>
-            </HStack>
-            <Divider w="75%" mt={10} />
-            <Flex w="75%" justify={"space-between"} align="center" mt={5}>
-              <Text color="#fafafa">Copyright @uncafeconIsa</Text>
-              <SocialIcons />
-            </Flex>
+            <VStack spacing={5}>
+              <Text
+                fontSize={"lg"}
+                color="secondary"
+                fontWeight="700"
+                fontFamily={"Lora"}
+                textAlign={"center"}
+              >
+                Leyendo, viajando y soñando <br /> dia por dia.
+              </Text>
+              <SocialButtons />
+              <Text color="primaryMute" fontSize={"sm"}>
+                Handcrafted by me
+              </Text>
+              <Text color="primary" fontSize={"xs"}>
+                Made with Chakra UI
+              </Text>
+            </VStack>
           </Flex>
-        </Flex>
+        </Box>
       </Flex>
     </>
   )
 }
-export default Footer

@@ -15,6 +15,7 @@ import {
   HStack,
   Link,
 } from "@chakra-ui/react"
+import { motion } from "framer-motion"
 import { FiTwitter, FiInstagram, FiFacebook } from "react-icons/fi"
 
 export default function SocialIcons() {
@@ -24,15 +25,19 @@ export default function SocialIcons() {
     { name: "Facebook", icon: <FiFacebook />, url: "" },
   ]
   const iconMarkup = iconArr.map(i => (
-    <Link isExternal href={i.url}>
-      <IconButton
-        size={"md"}
-        variant="ghost"
-        colorScheme={"pink"}
-        aria-label={i.name}
-        icon={i.icon}
-      />
-    </Link>
+    <motion.button
+      whileHover={{ scale: 1.02, y: -2, transition: { duration: 0.3 } }}
+    >
+      <Link isExternal href={i.url}>
+        <IconButton
+          size={"md"}
+          variant="ghost"
+          colorScheme={"pink"}
+          aria-label={i.name}
+          icon={i.icon}
+        />
+      </Link>
+    </motion.button>
   ))
 
   return (

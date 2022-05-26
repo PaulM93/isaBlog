@@ -25,14 +25,17 @@ import {
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import Card from "../components/Card"
-import SocialIcons from "../components/SocialIcons"
+import SocialIcons from "../components/Navbar/SocialIcons"
 import SmallCard from "../components/BlogCards/SmallCard"
 import BigCard from "../components/BlogCards/BigCard"
 import CardButtons from "../components/CardButtons"
 import Footer from "../components/Footer"
 import Banner from "../components/Banner"
-import FloatingNavbar from "../components/Navbar/FloatingNavbar"
+// import FloatingNavbar from "../components/Navbars/FloatingNavbar"
 import Navbar from "../components/Navbar/Navbar"
+import MotionWrapper from "../components/MotionWrapper"
+import MotionHeader from "../components/MotionHeader"
+import AboutCard from "../components/BlogCards/AboutCard"
 
 interface BlogIndexProps {
   data: { allContentfulPost: { edges: [{}] } }
@@ -135,67 +138,94 @@ const BlogIndex = ({
   return (
     // <Layout location={location}>
     <>
-      <Box width="100%">
-        <FloatingNavbar shouldShowActions={shouldShowActions} />
+      <Box width="100%" bg="#F3F5F7" minHeight={"200vh"} pb={"90px"}>
+        <Navbar />
         <Box
-          // bg="whiteAlpha.100"
-          bg="whiteAlpha.200"
+          pt={"90px"}
+          bg="#F3F5F7"
           maxHeight={"fit-content"}
           minHeight="fit-content"
         >
-          <Navbar />
-          <Flex
-            width="100%"
-            mt={5}
-            mb={10}
-            justify="center"
-            height="100%"
-            // bg="blue"
-          >
-            <Grid
-              w={["90%", "90%", "95%", "75%"]}
-              templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
-              gap={10}
+          <MotionWrapper>
+            <Flex
+              width="100%"
+              mt={5}
+              mb={10}
+              justify="center"
+              height="100%"
+              // bg="blue"
             >
-              <GridItem maxHeight={"100%"}>
-                <BigCard />
-              </GridItem>
-              <GridItem minHeight={"100%"} maxHeight="100%">
-                <Grid
-                  // bg="violet"
-                  templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
-                  templateRows={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
-                  gap={7}
-                >
-                  {smallCardMarkup}
-                </Grid>
-              </GridItem>
-            </Grid>
-          </Flex>
+              <Grid
+                w={["90%", "90%", "95%", "75%"]}
+                templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                gap={9}
+              >
+                <GridItem maxHeight={"100%"}>
+                  <BigCard />
+                </GridItem>
+                <GridItem minHeight={"100%"} maxHeight="100%">
+                  <Grid
+                    // bg="violet"
+                    templateColumns={[
+                      "",
+                      "",
+                      "repeat(2, 1fr)",
+                      "repeat(2, 1fr)",
+                    ]}
+                    templateRows={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                    gap={6}
+                  >
+                    {smallCardMarkup}
+                  </Grid>
+                </GridItem>
+              </Grid>
+            </Flex>
+          </MotionWrapper>
         </Box>
-        <Center mb={20}>
+        {/* Banner */}
+        <Center mt={"60px"} pb={"80px"} w="100%">
           <Banner />
         </Center>
-        {/* <Box mt={10}>
-          <Flex width={"100%"} mt={5} justify="center">
-            <Grid w="75%" templateColumns="repeat(2, 1fr)" gap={10}>
-              <GridItem>
-                <Grid
-                  // bg="violet"
-                  templateColumns="repeat(2, 1fr)"
-                  templateRows="repeat(2, 1fr)"
-                  gap={7}
-                >
-                  {smallCardMarkup}
-                </Grid>
-              </GridItem>
-              <GridItem>
-                <BigCard />
-              </GridItem>
-            </Grid>
-          </Flex>
+        {/* Second Section  */}
+        {/* <Box maxHeight={"fit-content"} minHeight="fit-content">
+          <MotionWrapper>
+            <Flex
+              width="100%"
+              mt={5}
+              mb={10}
+              flexDir={"column"}
+              align="center"
+              height="100%"
+              // bg="blue"
+            >
+              <MotionHeader />
+              <Grid
+                w={["90%", "90%", "95%", "75%"]}
+                templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                gap={9}
+              >
+                <GridItem minHeight={"100%"} maxHeight="100%">
+                  <Grid
+                    // bg="violet"
+                    templateColumns={[
+                      "",
+                      "",
+                      "repeat(2, 1fr)",
+                      "repeat(2, 1fr)",
+                    ]}
+                    templateRows={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                    gap={6}
+                  >
+                    {smallCardMarkup}
+                  </Grid>
+                </GridItem>
+                <GridItem maxHeight={"100%"}>
+                  <BigCard />
+                </GridItem>
+              </Grid>
+            </Flex>
+          </MotionWrapper>
         </Box> */}
-
         {/* This remains the navBar */}
       </Box>
 
@@ -229,45 +259,3 @@ export const blogPosts = graphql`
     }
   }
 `
-{
-  /* <Image
-                  w="100%"
-                  height="500px"
-                  src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                  alt="Dan Abramov"
-                  objectFit="cover"
-                  height="300px"
-                  // position={"absolute"}
-                />
-                <Heading size="md">Un blog de viajes, libros y comida</Heading>
-                <Heading size="2xl" mb={5} mt={3}>
-                  I Shouted Above <br /> the Sudden Noise
-                </Heading>
-                <Text w="60%" size="sm">
-                  In this article + guide we will cover all the necessary tools
-                  and techniques required to create an animation that tracks the
-                  progress of a user's position
-                </Text>
-                <Button mt={4} w="30%">
-                  Read more
-                </Button> */
-}
-
-{
-  /* <motion.div
-                  initial={{ y: 0 }}
-                  animate={{ y: divPosition * 2 }}
-                  transition={{ duration: 0.2 }}
-                  // style={{ position: "absolute", top: `${imagePosition}%` }}
-                  // style={{ position: "relative" }}
-                >
-                  <Image
-                    w="500px"
-                    src="https://images.pexels.com/photos/8090376/pexels-photo-8090376.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                    alt="Dan Abramov"
-                    objectFit="cover"
-                    height="300px"
-                    // position={"absolute"}
-                  />
-                </motion.div> */
-}

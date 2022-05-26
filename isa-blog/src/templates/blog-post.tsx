@@ -29,9 +29,12 @@ import {
   HStack,
   OrderedList,
   UnorderedList,
+  IconButton,
 } from "@chakra-ui/react"
 //Components
+import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
 import Layout from "../components/layout"
+import Navbar from "../components/Navbars/Navbar"
 import CardAvatar from "../components/Avatar"
 
 export default function blogPost({ data }) {
@@ -141,143 +144,69 @@ export default function blogPost({ data }) {
     )
   }, [currentPercent])
 
+  {
+    /* <motion.div
+        style={{
+          background: currentProgressColor,
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: `${currentPercent}%`,
+          height: "20px",
+        }}
+      ></motion.div> */
+  }
+
   return (
-    <Layout>
+    <>
       <motion.div
-        style={{ display: "flex" }}
+        style={{
+          display: "flex",
+          minHeight: "100vh",
+          background: "#F3F5F7",
+          justifyContent: "center",
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
       >
-        <motion.div
-          style={{
-            background: currentProgressColor,
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: `${currentPercent}%`,
-            height: "20px",
-          }}
-        ></motion.div>
-        <Grid w="100%" templateColumns="repeat(8, 1fr)" gap={3}>
-          <GridItem colSpan={[8, 8, 6, 6]}>
-            <Flex width="100%" minHeight="500px" borderRadius={"5px"}>
-              <Flex flexDir={"column"} width="100%">
-                <Box w="100%">
-                  <Image
-                    borderTopLeftRadius={5}
-                    borderTopRightRadius={5}
-                    maxHeight="350px"
-                    objectFit="cover"
-                    objectPosition="top"
-                    w="100%"
-                    src={image.gatsbyImageData.images.fallback.src}
-                    alt={slug}
-                  />
-                </Box>
-                <Box p={8} bg="white">
-                  <Flex align="center" justify="space-between" w="100%" mb={2}>
-                    <Heading fontFamily={"Nunito"} fontWeight="900" size="lg">
-                      {title}
-                    </Heading>
-                    <Box fontSize={"14px"} color="green">
-                      <Provider apiKey="pt_67130c06f822ef90712c3ff7033b1f">
-                        <LikeButton
-                          theme={{ primary: "green" }}
-                          id={slug}
-                          hideCounterIfLessThan={3}
-                          component={LikeButton.templates.Twitter}
-                        />
-                      </Provider>
-                    </Box>
-
-                    {/* <CommentCount config={disqusConfig} placeholder={"..."} /> */}
-                  </Flex>
-                  <Flex align="center" mb={10}>
-                    <CardAvatar
-                      author={name}
-                      src={images.fallback.src}
-                      date={createdAt}
-                    />
-                  </Flex>
-                  {/* bodyRichText */}
-                  <Box fontFamily={"Nunito"}>
-                    {renderRichText(bodyRichText, options)}
-                  </Box>
-                  <Box mt={20}>
-                    <Disqus config={disqusConfig} />
-                  </Box>
-                </Box>
-              </Flex>
-            </Flex>
-          </GridItem>
-
-          <GridItem colSpan={2} display={["none", "none", "flex", "flex"]}>
-            <Flex
-              flexDir={["row", "row", "column", "column"]}
-              w={"100%"}
-              align="center"
-            >
-              <Flex
-                w="100%"
-                borderRadius="5px"
-                p={5}
-                bg="#ffffff"
-                color={"fafafa"}
-                ml={2}
-                align="center"
-                justify={"center"}
-                flexDir={"column"}
+        <Flex width={"90%"} bg="red" minHeight={"100vh"} position="relative">
+          <Box mt={10} mb={10} position="relative">
+            <Flex position={"relative"} align="center">
+              <IconButton
+                position={"absolute"}
+                aria-label="Go back"
+                zIndex={50}
+                variant="outline"
+                icon={<Icon as={FiArrowLeft} />}
+              />
+              <motion.div
+                whileHover={{ opacity: 1, transition: { duration: 0.5 } }}
+                style={{ position: "absolute", zIndex: 100 }}
+                initial={{ opacity: 0 }}
               >
-                <Avatar size="lg" src="https://bit.ly/kent-c-dodds" />
-                <Heading
-                  mt={2}
-                  fontWeight={"900"}
-                  fontFamily={"Nunito"}
-                  size="md"
-                >
-                  Soy Isa
-                </Heading>
-                <Text fontSize="sm" fontFamily={"Lora"}>
-                  y soy de Colombia
-                </Text>
-                <Link to="/about">
-                  <Button colorScheme="pink" variant="outline" size="sm" mt={5}>
-                    Sobre mi
-                  </Button>
-                </Link>
-              </Flex>
-              <Flex
-                w="100%"
-                mt={2}
-                borderRadius="5px"
-                p={5}
-                bg="#ffffff"
-                color={"fafafa"}
-                maxH="250px"
-                ml={2}
-                align="center"
-                justify={"center"}
-                flexDir={"column"}
-              >
-                <Heading
-                  mb={2}
-                  fontWeight={"900"}
-                  fontFamily={"Lora"}
-                  size="md"
-                >
-                  Subscribete
-                </Heading>
-                <Input mb={2} placeholder="Enter your email..." />
-                <Button size="sm" colorScheme="blackAlpha">
-                  Submit
-                </Button>
-              </Flex>
+                <IconButton
+                  colorScheme={"pink"}
+                  aria-label="Go back"
+                  variant="outline"
+                  icon={<Icon as={FiArrowLeft} />}
+                />
+              </motion.div>
             </Flex>
-          </GridItem>
-        </Grid>
+          </Box>
+        </Flex>
+        <Image
+          borderRadius={"10px"}
+          boxSize={"100%"}
+          height={"260px"}
+          src={
+            "https://images.pexels.com/photos/6130307/pexels-photo-6130307.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          }
+          alt={"title"}
+          objectFit="cover"
+        />
       </motion.div>
-    </Layout>
+    </>
   )
 }
 
@@ -308,3 +237,119 @@ export const pageQuery = graphql`
     }
   }
 `
+{
+  /* <Grid w="100%" templateColumns="repeat(8, 1fr)" gap={3}>
+        <GridItem colSpan={[8, 8, 6, 6]}>
+          <Flex width="100%" minHeight="500px" borderRadius={"5px"}>
+            <Flex flexDir={"column"} width="100%">
+              <Box w="100%">
+                <Image
+                  borderTopLeftRadius={5}
+                  borderTopRightRadius={5}
+                  maxHeight="350px"
+                  objectFit="cover"
+                  objectPosition="top"
+                  w="100%"
+                  src={image.gatsbyImageData.images.fallback.src}
+                  alt={slug}
+                />
+              </Box>
+              <Box p={8} bg="white">
+                <Flex align="center" justify="space-between" w="100%" mb={2}>
+                  <Heading fontFamily={"Nunito"} fontWeight="900" size="lg">
+                    {title}
+                  </Heading>
+                  <Box fontSize={"14px"} color="green">
+                    <Provider apiKey="pt_67130c06f822ef90712c3ff7033b1f">
+                      <LikeButton
+                        theme={{ primary: "green" }}
+                        id={slug}
+                        hideCounterIfLessThan={3}
+                        component={LikeButton.templates.Twitter}
+                      />
+                    </Provider>
+                  </Box>
+
+                  <CommentCount config={disqusConfig} placeholder={"..."} />
+                </Flex>
+                <Flex align="center" mb={10}>
+                  <CardAvatar
+                    author={name}
+                    src={images.fallback.src}
+                    date={createdAt}
+                  />
+                </Flex>
+                {/* bodyRichText */
+}
+{
+  /* <Box fontFamily={"Nunito"}>
+                  {renderRichText(bodyRichText, options)}
+                </Box>
+                <Box mt={20}>
+                  <Disqus config={disqusConfig} />
+                </Box>
+              </Box>
+            </Flex>
+          </Flex>
+        </GridItem>
+
+        <GridItem colSpan={2} display={["none", "none", "flex", "flex"]}>
+          <Flex
+            flexDir={["row", "row", "column", "column"]}
+            w={"100%"}
+            align="center"
+          >
+            <Flex
+              w="100%"
+              borderRadius="5px"
+              p={5}
+              bg="#ffffff"
+              color={"fafafa"}
+              ml={2}
+              align="center"
+              justify={"center"}
+              flexDir={"column"}
+            >
+              <Avatar size="lg" src="https://bit.ly/kent-c-dodds" />
+              <Heading
+                mt={2}
+                fontWeight={"900"}
+                fontFamily={"Nunito"}
+                size="md"
+              >
+                Soy Isa
+              </Heading>
+              <Text fontSize="sm" fontFamily={"Lora"}>
+                y soy de Colombia
+              </Text>
+              <Link to="/about">
+                <Button colorScheme="pink" variant="outline" size="sm" mt={5}>
+                  Sobre mi
+                </Button>
+              </Link>
+            </Flex>
+            <Flex
+              w="100%"
+              mt={2}
+              borderRadius="5px"
+              p={5}
+              bg="#ffffff"
+              color={"fafafa"}
+              maxH="250px"
+              ml={2}
+              align="center"
+              justify={"center"}
+              flexDir={"column"}
+            >
+              <Heading mb={2} fontWeight={"900"} fontFamily={"Lora"} size="md">
+                Subscribete
+              </Heading>
+              <Input mb={2} placeholder="Enter your email..." />
+              <Button size="sm" colorScheme="blackAlpha">
+                Submit
+              </Button>
+            </Flex>
+          </Flex>
+        </GridItem>
+      </Grid> */
+}

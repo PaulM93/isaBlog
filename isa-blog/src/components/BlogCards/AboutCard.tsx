@@ -23,13 +23,7 @@ import {
 //Component
 import Tags from "./Tags"
 
-interface SmallCardProps {
-  src: string
-  title: string
-  hashtags: []
-}
-
-export default function SmallCard({ src, title, hashtags }: SmallCardProps) {
+export default function SmallCard({}: SmallCardProps) {
   const [whileHover, setWhileHover] = useState<Boolean>(false)
 
   const gradients: [] = [
@@ -46,7 +40,7 @@ export default function SmallCard({ src, title, hashtags }: SmallCardProps) {
   //   }, [whileHover === true])
 
   return (
-    <Link to="/como-hacer-un-postre-de-milo">
+    <Link to="/blog">
       <motion.div
         whileHover={{
           scale: 1.03,
@@ -66,12 +60,12 @@ export default function SmallCard({ src, title, hashtags }: SmallCardProps) {
         onHoverStart={() => setWhileHover(true)}
         onHoverEnd={() => setWhileHover(false)}
       >
-        <Image
+        <Avatar
           borderRadius={"10px"}
           boxSize={"100%"}
           height={"260px"}
-          src={src}
-          alt={title}
+          src={"src"}
+          alt={"title"}
           objectFit="cover"
         />
         <Flex p={4} flexDir="column" align={"center"} minH="100px">
@@ -86,7 +80,7 @@ export default function SmallCard({ src, title, hashtags }: SmallCardProps) {
             size="md"
             fontFamily={"Lora"}
           >
-            {title}
+            About me
           </Heading>
 
           <Tags whileHover={whileHover} />

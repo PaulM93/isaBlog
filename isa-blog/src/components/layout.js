@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react"
 import { Link } from "gatsby"
 //Components
-import Header from "./Header"
 import Footer from "./Footer"
 import CardButtons from "./CardButtons"
 
@@ -50,7 +49,6 @@ const Layout = ({ children }) => {
         // paddingBottom={["80px", "80px", "0px", "0px"]}
         // justify={"center"}
       >
-        <Header />
         <Box>{children}</Box>
         <Footer />
       </Flex>
