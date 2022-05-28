@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react"
+import { Link, navigate } from "gatsby"
 import { container, hiddenContainer } from "./NavBar.module.css"
-import { motion } from "framer-motion"
+import {
+  motion,
+  useViewportScroll,
+  useSpring,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion"
 import { Flex, Heading, IconButton, Button, HStack } from "@chakra-ui/react"
 //Components
 import SocialButtons from "./SocialIcons"
 import NavButtons from "./NavButtons"
 import { FiChevronDown, FiChevronLeft } from "react-icons/fi"
 
-interface NavBarProps {
-  page: string
-}
-
-export default function NavBar({ page }: NavBarProps) {
+export default function Navbar(props) {
   // const { colorMode, toggleColorMode } = useColorMode();
+  const [currentPercent, setCurrentPercent] = useState(0)
+  const [currentProgressColor, setCurrentProgressColor] = useState(null)
+  const [progressWidth, setProgressWidth] = useState("0")
+  //Scroll y progress = vertical scroll progres between 0 - 1
+  const { scrollYProgress } = useViewportScroll()
+  const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 })
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100])
+
+  console.log("Nabbb", props)
+
+  useEffect(
+    () =>
+      yRange.onChange(v => {
+        setCurrentPercent(Math.trunc(yRange.current))
+      }),
+    [yRange]
+  )
 
   const [shouldShowActions, setShouldShowActions] = useState(false)
   useEffect(() => {
@@ -67,6 +87,22 @@ export default function NavBar({ page }: NavBarProps) {
             },
           }}
         />
+        {/* Only show on blog pages  */}
+        {props.location.pathname !== "/" && (
+          <motion.div
+            style={{
+              backgroundSize: "cover",
+              backgroundPosition: "top",
+              backgroundImage:
+                'url("https://images.pexels.com/photos/7120362/pexels-photo-7120362.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
+              position: "fixed",
+              top: "0",
+              left: "0",
+              width: `${currentPercent}%`,
+              height: "10px",
+            }}
+          ></motion.div>
+        )}
 
         <Flex
           display={["none", "none", "flex", "flex"]}
@@ -170,7 +206,7 @@ export default function NavBar({ page }: NavBarProps) {
                   <IconButton
                     isRound={open ? false : true}
                     variant={"outline"}
-                    onClick={() => setOpen(!open)}
+                    onClick={() => navigate(-1)}
                     icon={<FiChevronLeft />}
                     aria-label="open menu"
                   />

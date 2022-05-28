@@ -23,7 +23,7 @@ export default function Tags({ whileHover }: TagProps) {
 
   const tagMarkup = (
     <motion.div
-      style={{ position: "absolute" }}
+      // style={{ position: "absolute" }}
       initial={{ opacity: 1 }}
       animate={{ opacity: whileHover ? 0 : 1 }}
     >
@@ -54,7 +54,7 @@ export default function Tags({ whileHover }: TagProps) {
           fontWeight={700}
           color="blackAlpha.600"
           borderRadius={10}
-          background="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"
+          background="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)"
         >
           Viajes
         </Text>
@@ -75,7 +75,8 @@ export default function Tags({ whileHover }: TagProps) {
   )
 
   return (
-    <Flex position={"relative"} width="100%" bg="green" justify={"center"}>
+    // <Flex position={"relative"} width="100%" bg="green" justify={"center"}>
+    <Flex justify={"center"}>
       {tagMarkup}
       {openPost}
     </Flex>

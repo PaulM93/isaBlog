@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Button, Box, Flex, Heading, Input, Center } from "@chakra-ui/react"
 import { motion } from "framer-motion"
-import MotionWrapper from "./MotionWrapper"
+import MotionWrapper from "./MotionComponents/MotionWrapper"
 
 export default function Banner() {
   const [whileHover, setWhileHover] = useState<Boolean>(false)
@@ -12,7 +12,7 @@ export default function Banner() {
     <>
       <MotionWrapper>
         <Center w="100%">
-          <Box w={["90%", "90%", "95%", "75%"]}>
+          <Box w={"100%"}>
             <motion.div
               whileHover={{
                 cursor: "pointer",

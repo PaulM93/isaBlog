@@ -33,22 +33,22 @@ import Footer from "../components/Footer"
 import Banner from "../components/Banner"
 // import FloatingNavbar from "../components/Navbars/FloatingNavbar"
 import Navbar from "../components/Navbar/Navbar"
-import MotionWrapper from "../components/MotionWrapper"
-import MotionHeader from "../components/MotionHeader"
+import MotionWrapper from "../components/MotionComponents/MotionWrapper"
+// import MotionHeader from "../components/MotionComponents/MotionHeader"
 import AboutCard from "../components/BlogCards/AboutCard"
 
 interface BlogIndexProps {
   data: { allContentfulPost: { edges: [{}] } }
 }
 
-const BlogIndex = ({
-  data: {
-    allContentfulPost: { edges },
-  },
-}: BlogIndexProps) => {
+const BlogIndex = props => {
+  const {
+    location,
+    data: {
+      allContentfulPost: { edges },
+    },
+  } = props
   const blogPosts: [{}] = edges
-
-  console.log(blogPosts)
 
   const blogCards = blogPosts.map(post => (
     <GridItem minWidth="100%">
@@ -136,58 +136,74 @@ const BlogIndex = ({
   console.log("Image Positon", imagePosition)
 
   return (
-    // <Layout location={location}>
     <>
-      <Box width="100%" bg="#F3F5F7" minHeight={"200vh"} pb={"90px"}>
-        <Navbar />
-        <Box
-          pt={"90px"}
-          bg="#F3F5F7"
-          maxHeight={"fit-content"}
-          minHeight="fit-content"
-        >
-          <MotionWrapper>
-            <Flex
-              width="100%"
-              mt={5}
-              mb={10}
-              justify="center"
-              height="100%"
-              // bg="blue"
+      <Layout location={location}>
+        <MotionWrapper>
+          <Flex width="100%" mt={5} mb={10} justify="center" height="100%">
+            <Grid
+              w="100%"
+              templateColumns={[
+                "repeat(1, 1fr)",
+                "repeat(1, 1fr)",
+                "repeat(1, 1fr)",
+                "repeat(2, 1fr)",
+              ]}
+              gap={9}
             >
-              <Grid
-                w={["90%", "90%", "95%", "75%"]}
-                templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
-                gap={9}
+              <GridItem
+                display={["block", "block", "none", "block"]}
+                maxHeight={"100%"}
               >
-                <GridItem maxHeight={"100%"}>
-                  <BigCard />
-                </GridItem>
-                <GridItem minHeight={"100%"} maxHeight="100%">
-                  <Grid
-                    // bg="violet"
-                    templateColumns={[
-                      "",
-                      "",
-                      "repeat(2, 1fr)",
-                      "repeat(2, 1fr)",
-                    ]}
-                    templateRows={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
-                    gap={6}
-                  >
-                    {smallCardMarkup}
-                  </Grid>
-                </GridItem>
-              </Grid>
-            </Flex>
-          </MotionWrapper>
-        </Box>
+                <BigCard />
+              </GridItem>
+              <GridItem minHeight={"100%"} maxHeight="100%" width={"100%"}>
+                <Grid
+                  templateColumns={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                  templateRows={["", "", "repeat(2, 1fr)", "repeat(2, 1fr)"]}
+                  gap={6}
+                >
+                  {smallCardMarkup}
+                </Grid>
+              </GridItem>
+            </Grid>
+          </Flex>
+        </MotionWrapper>
         {/* Banner */}
-        <Center mt={"60px"} pb={"80px"} w="100%">
-          <Banner />
-        </Center>
-        {/* Second Section  */}
-        {/* <Box maxHeight={"fit-content"} minHeight="fit-content">
+        <Banner />
+      </Layout>
+    </>
+  )
+}
+
+export default BlogIndex
+
+export const blogPosts = graphql`
+  query BlogPosts {
+    allContentfulPost {
+      edges {
+        node {
+          title
+          slug
+          createdAt(formatString: "LL")
+          author
+          image {
+            gatsbyImageData(width: 300, resizingBehavior: FILL)
+          }
+          avatar {
+            avatarImage {
+              gatsbyImageData(width: 30, resizingBehavior: FILL)
+            }
+          }
+        }
+      }
+    }
+  }
+`
+{
+  /* Second Section  */
+}
+{
+  /* <Box maxHeight={"fit-content"} minHeight="fit-content">
           <MotionWrapper>
             <Flex
               width="100%"
@@ -225,37 +241,8 @@ const BlogIndex = ({
               </Grid>
             </Flex>
           </MotionWrapper>
-        </Box> */}
-        {/* This remains the navBar */}
-      </Box>
-
-      {/* <Footer /> */}
-    </>
-    // </Layout>
-  )
+        </Box> */
 }
-
-export default BlogIndex
-
-export const blogPosts = graphql`
-  query BlogPosts {
-    allContentfulPost {
-      edges {
-        node {
-          title
-          slug
-          createdAt(formatString: "LL")
-          author
-          image {
-            gatsbyImageData(width: 300, resizingBehavior: FILL)
-          }
-          avatar {
-            avatarImage {
-              gatsbyImageData(width: 30, resizingBehavior: FILL)
-            }
-          }
-        }
-      }
-    }
-  }
-`
+{
+  /* This remains the navBar */
+}

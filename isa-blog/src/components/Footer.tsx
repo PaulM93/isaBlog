@@ -40,7 +40,7 @@ export default function Footer() {
     <>
       <Flex flexDir={"column"} width="100%" align={"center"} bg="#F3F5F7">
         <Divider borderColor={"blackAlpha.300"} width="75%" />
-        <Box pb={10} pt={10} w={["85%", "100%"]}>
+        <Box pb={12} pt={12} w={["85%", "100%"]}>
           <Flex
             flexDir="column"
             alignItems="center"
@@ -71,6 +71,13 @@ export default function Footer() {
             </VStack>
           </Flex>
         </Box>
+        <Box
+          height="10px"
+          width="100%"
+          backgroundSize="cover"
+          backgroundPosition="top"
+          backgroundImage='url("https://images.pexels.com/photos/7120362/pexels-photo-7120362.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")'
+        />
       </Flex>
     </>
   )

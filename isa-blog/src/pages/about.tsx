@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react"
 //Components
 import Layout from "../components/layout"
-import MotionWrapper from "../components/MotionWrapper"
+import MotionWrapper from "../components/MotionComponents/MotionWrapper"
 import Card from "../components/Card"
 
 export default function about() {
