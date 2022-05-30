@@ -1,54 +1,57 @@
-import React, { useState, useEffect } from "react"
-import { Link, navigate } from "gatsby"
-import { container, hiddenContainer } from "./NavBar.module.css"
+import React, { useState, useEffect } from "react";
+import { Link, navigate } from "gatsby";
+import { container, hiddenContainer } from "./Navbar.module.css";
 import {
   motion,
   useViewportScroll,
   useSpring,
   useTransform,
   AnimatePresence,
-} from "framer-motion"
-import { Flex, Heading, IconButton, Button, HStack } from "@chakra-ui/react"
+} from "framer-motion";
+import { Flex, Heading, IconButton, Button, HStack } from "@chakra-ui/react";
 //Components
-import SocialButtons from "./SocialIcons"
-import NavButtons from "./NavButtons"
-import { FiChevronDown, FiChevronLeft } from "react-icons/fi"
+import SocialButtons from "./SocialIcons";
+import NavButtons from "./NavButtons";
+import { FiChevronDown, FiChevronLeft } from "react-icons/fi";
 
 export default function Navbar(props) {
   // const { colorMode, toggleColorMode } = useColorMode();
-  const [currentPercent, setCurrentPercent] = useState(0)
-  const [currentProgressColor, setCurrentProgressColor] = useState(null)
-  const [progressWidth, setProgressWidth] = useState("0")
+  const [currentPercent, setCurrentPercent] = useState(0);
+  const [currentProgressColor, setCurrentProgressColor] = useState(null);
+  const [progressWidth, setProgressWidth] = useState("0");
   //Scroll y progress = vertical scroll progres between 0 - 1
-  const { scrollYProgress } = useViewportScroll()
-  const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 })
-  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const { scrollYProgress } = useViewportScroll();
+  const pathLength = useSpring(scrollYProgress, {
+    stiffness: 400,
+    damping: 90,
+  });
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-  console.log("Nabbb", props)
+  console.log("Nabbb", props);
 
   useEffect(
     () =>
-      yRange.onChange(v => {
-        setCurrentPercent(Math.trunc(yRange.current))
+      yRange.onChange((v) => {
+        setCurrentPercent(Math.trunc(yRange.current));
       }),
     [yRange]
-  )
+  );
 
-  const [shouldShowActions, setShouldShowActions] = useState(false)
+  const [shouldShowActions, setShouldShowActions] = useState(false);
   useEffect(() => {
     function handleScroll() {
-      const yPos = window.scrollY
-      const isScrollingDown = yPos > 0
-      setShouldShowActions(isScrollingDown)
+      const yPos = window.scrollY;
+      const isScrollingDown = yPos > 0;
+      setShouldShowActions(isScrollingDown);
     }
-    window.addEventListener("scroll", handleScroll, false)
+    window.addEventListener("scroll", handleScroll, false);
     return () => {
-      window.removeEventListener("scroll", handleScroll, false)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll, false);
+    };
+  }, []);
 
   //Mob
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -263,5 +266,5 @@ export default function Navbar(props) {
         </Flex>
       </motion.div>
     </>
-  )
+  );
 }
