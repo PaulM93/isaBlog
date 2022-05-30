@@ -9,7 +9,7 @@ export default function NavButtons() {
   const buttonArr = [
     { title: "Inicio", val: "/" },
     { title: "Sobre mí", val: "/sobremi" },
-    { title: "Contáctame", val: "contactame" },
+    { title: "Contáctame", val: "/contactame" },
   ]
 
   return (

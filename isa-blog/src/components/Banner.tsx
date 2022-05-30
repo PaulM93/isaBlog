@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import MotionWrapper from "./MotionComponents/MotionWrapper"
 
 export default function Banner() {
-  const [whileHover, setWhileHover] = useState<Boolean>(false)
+  const [whileHover, setWhileHover] = useState<boolean>(false)
 
   // https://images.pexels.com/photos/7120362/pexels-photo-7120362.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
   // https://images.pexels.com/photos/2860807/pexels-photo-2860807.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940

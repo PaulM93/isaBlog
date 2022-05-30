@@ -11,12 +11,12 @@ export default function CardAvatar({ author, src, date }: AvatarProps) {
   return (
     <Flex align="center">
       {" "}
-      <Avatar size="md" src={src} />
+      <Avatar size="sm" src={src} />
       <Box ml={2}>
-        <Text fontFamily={"Nunito"} fontWeight="700" fontSize={"sm"}>
+        <Text fontFamily={"Nunito"} fontWeight="700" fontSize={"xs"}>
           {author}
         </Text>
-        <Text fontFamily={"Nunito"} fontSize={"sm"} textTransform="capitalize">
+        <Text fontFamily={"Nunito"} fontSize={"xs"} textTransform="capitalize">
           {date}
         </Text>
       </Box>

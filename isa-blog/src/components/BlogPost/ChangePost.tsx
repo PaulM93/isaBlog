@@ -6,13 +6,19 @@ import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
 interface ChangePostProps {
   side: boolean
   url: string
+  displayButton: boolean
 }
 
-export default function ChangePost({ side, url }: ChangePostProps) {
+export default function ChangePost({
+  side,
+  url,
+  displayButton,
+}: ChangePostProps) {
   const [whileHover, setWhileHover] = useState<Boolean>(false)
 
   return (
     <Flex
+      display={displayButton ? "flex" : "none"}
       ml={4}
       m={4}
       top="50%"

@@ -53,22 +53,6 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      //All files
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/content`,
-        name: `blog`,
-      },
-    },
-    {
-      //Comida files
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/content/comida`,
-        name: `comida`,
-      },
-    },
 
     "@chakra-ui/gatsby-plugin",
     // {

@@ -1,41 +1,8 @@
 import React from "react"
 import SocialButtons from "./Navbar/SocialIcons"
-import {
-  Box,
-  Flex,
-  Divider,
-  Text,
-  VStack,
-  IconButton,
-  Link,
-  Center,
-} from "@chakra-ui/react"
-import { FaFacebookF, FaGithub, FaInstagram } from "react-icons/fa"
+import { Box, Flex, Divider, Text, VStack } from "@chakra-ui/react"
 
 export default function Footer() {
-  const socialIcons = [
-    {
-      name: "facebook",
-      val: "https://www.facebook.com/",
-      icon: <FaFacebookF />,
-    },
-    {
-      name: "github",
-      val: "https://github.com/",
-      icon: <FaGithub />,
-    },
-    {
-      name: "instagram",
-      val: "https://www.instagram.com/",
-      icon: <FaInstagram />,
-    },
-  ]
-  const socialMarkup = socialIcons.map(i => (
-    <Link color={"secondary"} href={i.val} isExternal>
-      <IconButton aria-label={i.name} icon={i.icon} isRound />
-    </Link>
-  ))
-
   return (
     <>
       <Flex flexDir={"column"} width="100%" align={"center"} bg="#F3F5F7">

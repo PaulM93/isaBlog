@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
+import { graphql } from "gatsby"
+import { useViewportScroll, useSpring, useTransform } from "framer-motion"
 import {
-  motion,
-  useViewportScroll,
-  useSpring,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion"
-import {
-  Container,
-  Image,
-  Button,
   Grid,
   Box,
   Flex,
@@ -24,11 +14,10 @@ import {
 } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import Card from "../components/Card"
 import SocialIcons from "../components/Navbar/SocialIcons"
 import SmallCard from "../components/BlogCards/SmallCard"
 import BigCard from "../components/BlogCards/BigCard"
-import CardButtons from "../components/CardButtons"
+// import CardButtons from "../components/CardButtons"
 import Footer from "../components/Footer"
 import Banner from "../components/Banner"
 // import FloatingNavbar from "../components/Navbars/FloatingNavbar"
@@ -49,12 +38,6 @@ const BlogIndex = props => {
     },
   } = props
   const blogPosts: [{}] = edges
-
-  const blogCards = blogPosts.map(post => (
-    <GridItem minWidth="100%">
-      <Card post={post} />
-    </GridItem>
-  ))
 
   const [currentPercent, setCurrentPercent] = useState(100)
   const [currentProgressColor, setCurrentProgressColor] = useState(null)
@@ -120,20 +103,6 @@ const BlogIndex = props => {
       <SmallCard src={card.src} title={card.title} hashtags={[]} />
     </GridItem>
   ))
-
-  // useEffect(() => {
-  //   function handleScroll() {
-  //     const yPos = window.scrollY
-  //     const isScrollingDown = yPos > 0
-  //     setShouldShowActions(isScrollingDown)
-  //   }
-  //   window.addEventListener("scroll", handleScroll, false)
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll, false)
-  //   }
-  // }, [])
-
-  console.log("Image Positon", imagePosition)
 
   return (
     <>

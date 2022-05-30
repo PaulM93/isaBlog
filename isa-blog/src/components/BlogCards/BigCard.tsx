@@ -1,24 +1,23 @@
 import React, { useState } from "react"
 //Components
-import SocialIcons from "./SocialIcons"
-import Tags from "./Tags"
-import { Image, Box, Flex, Heading, Text, Avatar } from "@chakra-ui/react"
+import SocialIcons from "./Util/SocialIcons"
+import MotionLayout from "./MotionLayout"
+import Title from "./Util/Title"
+import Tags from "./Util/Tags"
+import Avatar from "../Avatar"
+//chakra
+import { Image, Box, Flex, Text } from "@chakra-ui/react"
 import { motion } from "framer-motion"
 
 export default function BigCard() {
-  const [whileHover, setWhileHover] = useState<Boolean>(false)
+  const [whileHover, setWhileHover] = useState<boolean>(false)
+
+  const setHoverStatus = (val: boolean) => {
+    setWhileHover(val)
+  }
 
   return (
-    <motion.div
-      whileHover={{
-        scale: 1.01,
-        transition: { duration: 0.2 },
-        boxShadow: "rgba(0, 0, 0, 0.09) 0px 3px 12px",
-      }}
-      style={{ cursor: "pointer", overflow: "hidden", height: "100%" }}
-      onHoverStart={() => setWhileHover(true)}
-      onHoverEnd={() => setWhileHover(false)}
-    >
+    <MotionLayout setHoverStatus={setHoverStatus} cardType={"lg"}>
       <Flex
         flexDir={"column"}
         position="relative"
@@ -48,24 +47,16 @@ export default function BigCard() {
           flexDir="column"
           align="center"
         >
-          <Heading
+          <Title
+            title={"Por que amo Mexico"}
+            whileHover={whileHover}
             size={"lg"}
-            mb={4}
-            textAlign="center"
-            fontFamily={"Lora"}
-            bgGradient={
-              whileHover
-                ? "linear(to-l, #0865AF,  #7B0E5B)"
-                : "linear(to-l, #000000, #000000)"
-            }
-            bgClip="text"
-          >
-            Por que amo Mexico
-          </Heading>
+          />
+          {/* Tags  */}
           <Box mb={12}>
             <Tags />
           </Box>
-
+          {/* Body Text  */}
           <Text fontSize={"md"} mb={6} textAlign="center">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             rutrum tempus nibh eu faucibus. Phasellus ornare nibh quis tellus
@@ -96,26 +87,17 @@ export default function BigCard() {
             align="center"
             justify="space-between"
           >
-            <Flex>
-              <Avatar
-                width="40px"
-                height="40px"
-                src="https://scontent.feoh3-1.fna.fbcdn.net/v/t39.30808-6/215991452_106042271754854_4781555572612688391_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=visdt3YpbvgAX9yr68h&_nc_ht=scontent.feoh3-1.fna&oh=00_AT8evGpwNAJ_TqEKZZeVAza00sxrY5_uWwPx-h3QIO97yA&oe=62914AE2"
-              />
-
-              <Box ml={3}>
-                <Text fontFamily={"Lora"} fontWeight={"700"} fontSize={"xs"}>
-                  Isa Arrautt
-                </Text>
-                <Text fontFamily={"Lora"} fontSize={"xs"}>
-                  12/03/22
-                </Text>
-              </Box>
-            </Flex>
+            <Avatar
+              date={"12/03/22"}
+              src={
+                "https://scontent.feoh3-1.fna.fbcdn.net/v/t39.30808-6/215991452_106042271754854_4781555572612688391_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=visdt3YpbvgAX9yr68h&_nc_ht=scontent.feoh3-1.fna&oh=00_AT8evGpwNAJ_TqEKZZeVAza00sxrY5_uWwPx-h3QIO97yA&oe=62914AE2"
+              }
+              author={"Isa"}
+            />
             <SocialIcons />
           </Flex>
         </Flex>
       </Flex>
-    </motion.div>
+    </MotionLayout>
   )
 }
