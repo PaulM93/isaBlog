@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
-import { graphql } from "gatsby"
-import { useViewportScroll, useSpring, useTransform } from "framer-motion"
+import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
+import { useViewportScroll, useSpring, useTransform } from "framer-motion";
 import {
   Grid,
   Box,
@@ -11,61 +11,64 @@ import {
   Avatar,
   GridItem,
   HStack,
-} from "@chakra-ui/react"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
-import SocialIcons from "../components/Navbar/SocialIcons"
-import SmallCard from "../components/BlogCards/SmallCard"
-import BigCard from "../components/BlogCards/BigCard"
+} from "@chakra-ui/react";
+import Layout from "../components/Layout";
+import Seo from "../components/seo";
+import SocialIcons from "../components/Navbar/SocialIcons";
+import SmallCard from "../components/BlogCards/SmallCard";
+import BigCard from "../components/BlogCards/BigCard";
 // import CardButtons from "../components/CardButtons"
-import Footer from "../components/Footer"
-import Banner from "../components/Banner"
+import Footer from "../components/Footer";
+import Banner from "../components/Banner";
 // import FloatingNavbar from "../components/Navbars/FloatingNavbar"
-import Navbar from "../components/Navbar/Navbar"
-import MotionWrapper from "../components/MotionComponents/MotionWrapper"
+import Navbar from "../components/Navbar/Navbar";
+import MotionWrapper from "../components/MotionComponents/MotionWrapper";
 // import MotionHeader from "../components/MotionComponents/MotionHeader"
-import AboutCard from "../components/BlogCards/AboutCard"
+import AboutCard from "../components/BlogCards/AboutCard";
 
 interface BlogIndexProps {
-  data: { allContentfulPost: { edges: [{}] } }
+  data: { allContentfulPost: { edges: [{}] } };
 }
 
-const BlogIndex = props => {
+const BlogIndex = (props) => {
   const {
     location,
     data: {
       allContentfulPost: { edges },
     },
-  } = props
-  const blogPosts: [{}] = edges
+  } = props;
+  const blogPosts: [{}] = edges;
 
-  const [currentPercent, setCurrentPercent] = useState(100)
-  const [currentProgressColor, setCurrentProgressColor] = useState(null)
-  const [progressHeight, setProgressHeight] = useState(70)
+  const [currentPercent, setCurrentPercent] = useState(100);
+  const [currentProgressColor, setCurrentProgressColor] = useState(null);
+  const [progressHeight, setProgressHeight] = useState(70);
   //Scroll y progress = vertical scroll progres between 0 - 1
-  const { scrollYProgress } = useViewportScroll()
-  const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 })
-  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const { scrollYProgress } = useViewportScroll();
+  const pathLength = useSpring(scrollYProgress, {
+    stiffness: 400,
+    damping: 90,
+  });
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-  console.log("Current", currentPercent)
+  console.log("Current", currentPercent);
 
-  const [imagePosition, setImagePosition] = useState(-15)
-  const [divPosition, setDivPosition] = useState(0)
+  const [imagePosition, setImagePosition] = useState(-15);
+  const [divPosition, setDivPosition] = useState(0);
 
-  const [shouldShowActions, setShouldShowActions] = useState(false)
+  const [shouldShowActions, setShouldShowActions] = useState(false);
   useEffect(
     () =>
-      yRange.onChange(v => {
+      yRange.onChange((v) => {
         //Can I get pixels?
-        console.log("Vssdf", v)
-        console.log("yRange", yRange.current)
-        setCurrentPercent(100 - Math.trunc(yRange.current))
-        setDivPosition(-Math.trunc(yRange.current * 2))
-        setImagePosition(imagePosition - Math.trunc(yRange.current * 2))
+        console.log("Vssdf", v);
+        console.log("yRange", yRange.current);
+        setCurrentPercent(100 - Math.trunc(yRange.current));
+        setDivPosition(-Math.trunc(yRange.current * 2));
+        setImagePosition(imagePosition - Math.trunc(yRange.current * 2));
         if (Math.trunc(yRange.current) > 15) {
-          setShouldShowActions(true)
+          setShouldShowActions(true);
         } else {
-          setShouldShowActions(false)
+          setShouldShowActions(false);
         }
         // if (Math.trunc(yRange.current) < 66.66) {
         //   setShouldShowActions(false)
@@ -74,7 +77,7 @@ const BlogIndex = props => {
         // }
       }),
     [yRange]
-  )
+  );
 
   const cardData = [
     {
@@ -97,12 +100,12 @@ const BlogIndex = props => {
       title: "Edificio de alla",
       hashtags: [],
     },
-  ]
-  const smallCardMarkup = cardData.map(card => (
+  ];
+  const smallCardMarkup = cardData.map((card) => (
     <GridItem>
       <SmallCard src={card.src} title={card.title} hashtags={[]} />
     </GridItem>
-  ))
+  ));
 
   return (
     <>
@@ -141,10 +144,10 @@ const BlogIndex = props => {
         <Banner />
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default BlogIndex
+export default BlogIndex;
 
 export const blogPosts = graphql`
   query BlogPosts {
@@ -167,7 +170,7 @@ export const blogPosts = graphql`
       }
     }
   }
-`
+`;
 {
   /* Second Section  */
 }

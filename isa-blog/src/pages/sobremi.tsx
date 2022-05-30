@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Container,
   Image,
@@ -13,20 +13,20 @@ import {
   Input,
   GridItem,
   HStack,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 //Components"
-import BlogPostWrapper from "../components/BlogPost/BlogPostWrapper"
-import SocialIcons from "../components/BlogCards/Util/SocialIcons"
-import MotionWrapper from "../components/MotionComponents/MotionWrapper"
+import BlogPostWrapper from "../components/BlogPost/BlogPostWrapper";
+import SocialIcons from "../components/BlogCards/Util/SocialIcons";
+import MotionWrapper from "../components/MotionComponents/MotionWrapper";
 
 export default function SobreMi(props) {
-  const { location } = props
+  const { location } = props;
 
-  const [whileHover, setWhileHover] = useState<boolean>(false)
+  const [whileHover, setWhileHover] = useState<boolean>(false);
 
   const setHoverStatus = (val: boolean) => {
-    setWhileHover(val)
-  }
+    setWhileHover(val);
+  };
 
   return (
     <>
@@ -35,6 +35,7 @@ export default function SobreMi(props) {
         changePost={false}
         setHoverStatus={setHoverStatus}
       >
+        <h1>hello</h1>
         {/* <Flex
           flexDir={"column"}
           position="relative"
@@ -71,5 +72,5 @@ export default function SobreMi(props) {
         </Flex> */}
       </BlogPostWrapper>
     </>
-  )
+  );
 }
