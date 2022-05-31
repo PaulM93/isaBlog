@@ -1,141 +1,83 @@
-import React, { useState } from "react"
-import axios from "axios"
-import { motion } from "framer-motion"
+import React, { useState } from "react";
+import { useForm, ValidationError } from "@formspree/react";
+import { motion } from "framer-motion";
+//Components
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer";
+import SocialButtons from "../components/Navbar/SocialIcons";
+//ChakraUI
 import {
   Heading,
   Flex,
   FormLabel,
   FormControl,
   Input,
-  Box,
   Button,
+  Text,
   Textarea,
   useToast,
   FormErrorMessage,
-} from "@chakra-ui/react"
-//Components
-import Navbar from "../components/Navbar/Navbar"
-import Footer from "../components/Footer"
-import ChangePost from "../components/BlogPost/ChangePost"
-import BlogPostWrapper from "../components/BlogPost/BlogPostWrapper"
-import MotionWrapper from "../components/MotionComponents/MotionWrapper"
+} from "@chakra-ui/react";
 
 export default function Contact({ location }) {
-  const [whileHover, setWhileHover] = useState<boolean>(false)
-  const setHoverStatus = (val: boolean) => {
-    setWhileHover(true)
-  }
-  const toast = useToast()
-  const [details, setDetails] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
+  const toast = useToast();
+  const [whileHover, setWhileHover] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   const [errors, setErrors] = useState({
     name: false,
     email: false,
     message: false,
-  })
+  });
   const handleValidation = () => {
-    let fields = details
-    let errors = {}
-    let formIsValid = true
+    let fields = details;
+    let errors = {};
+    let formIsValid = true;
 
-    const fieldArr = ["name", "message", "email"]
+    const fieldArr = ["name", "message", "email"];
     //Name - Message
-    fieldArr.map(i => {
+    fieldArr.map((i) => {
       if (!fields[i]) {
-        formIsValid = false
-        return (errors[i] = true)
+        formIsValid = false;
+        return (errors[i] = true);
       }
-    })
+    });
 
-    setErrors(errors)
-    return formIsValid
+    setErrors(errors);
+    return formIsValid;
+  };
+
+  //FormSpree
+  const [details, setDetails] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  // const formValues = details;
+  const [state, handleSubmit] = useForm("xyyoolkq");
+  if (state.succeeded) {
+    return <p>Thanks for joining!</p>;
   }
 
-  const [loading, setLoading] = useState(false)
-  const handleSubmit = e => {
-    e.preventDefault()
-    setLoading(true)
-    if (handleValidation()) {
-      axios
-        .post("/send-email", details)
-        .then(res => {
-          console.log(res)
-          setLoading(false)
-          toast({
-            title: res.data.message,
-            status: "success",
-            position: "bottom-left",
-            isClosable: true,
-          })
-        })
-        .catch(err => {
-          console.log(err.response)
-          setLoading(false)
-          toast({
-            title: err.response.data.message,
-            status: "error",
-            position: "bottom-left",
-            isClosable: true,
-          })
-        })
-    } else {
-      setLoading(false)
-    }
-  }
+  console.log("State", state);
 
-  const handleChange = e => {
+  //Handle errors on the client i.e. missing email etc
+  //Set loading basd on useForm state
+  //Do the same for the errors
+
+  //Handle field changes
+  const handleChange = (e) => {
     setDetails({
       ...details,
       [e.target.id]: e.target.value,
-    })
-  }
-
-  const [hovering, setHovering] = useState(false)
-  const submitButton = (
-    <motion.button
-      onClick={e => handleSubmit(e)}
-      onHoverStart={() => setHovering(true)}
-      onHoverEnd={() => setHovering(false)}
-      whileHover={{
-        scale: 1.1,
-        transition: { duration: 0.2 },
-      }}
-    >
-      <Button
-        style={{
-          display: "flex",
-          padding: "15px 40px 15px 40px",
-          borderRadius: "5px",
-          color: "#EDE8FD",
-          fontWeight: "500",
-          background: "#CF2205",
-        }}
-        isLoading={loading}
-        loadingText="Submitting"
-      >
-        Send it{" "}
-        <motion.p
-          initial={{ rotate: 0 }}
-          animate={{ rotate: hovering ? [0, 90, 0] : 0 }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          style={{ marginLeft: "5px" }}
-        >
-          👋
-        </motion.p>
-      </Button>
-    </motion.button>
-  )
-  //background is the image
-  //when we hover over it it shifts
-  //absolute position on top they whit eform
+    });
+  };
 
   return (
     <>
       <Navbar location={location} />
+      {/* Toast  */}
+      {state.succeeded && toast({ title: "Message Sent", status: "success" })}
       <Flex
         background={"#F3F5F7"}
         width={"100%"}
@@ -144,18 +86,12 @@ export default function Contact({ location }) {
         pt={90}
       >
         <Flex
-          width={["90%", "90%", "90%", "75%"]}
+          width={["90%", "90%", "90%", "50%"]}
           justify={"center"}
           height={"fit-content"}
           paddingTop="30px"
           paddingBottom={"100px"}
         >
-          <Box
-            minWidth={["0%", "0%", "15%", "20%"]}
-            display={["none", "none", "block", "block"]}
-          >
-            <ChangePost side={false} url={""} displayButton={false} />
-          </Box>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.5 } }}
@@ -167,7 +103,7 @@ export default function Contact({ location }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              padding: "0.4em",
+              padding: "0.2em",
               width: "100%",
               maxHeight: "100%",
               minHeight: "100%",
@@ -180,7 +116,7 @@ export default function Contact({ location }) {
           >
             <Flex
               flexDir="column"
-              p={20}
+              p={[8, 8, 20, 20]}
               borderRadius="10px"
               alignItems="center"
               bg="#ffffff"
@@ -189,101 +125,157 @@ export default function Contact({ location }) {
               <Flex align="center">
                 {/* <Subtitle sentence={"Thanks for taking the time to reach out."} /> */}
               </Flex>
-              <Heading size="lg" mb={10} textAlign="center" color="primaryMute">
-                How can I help you today?
+              <Heading size="lg" mb={4} textAlign="center">
+                ¿Quieres Trabajar Conmigo?
               </Heading>
-              <Flex mb={5} spacing={4} w="100%">
-                <FormControl
-                  htmlFor="name"
-                  isRequired
-                  isInvalid={errors.name}
-                  mr={4}
+              <Text size="md" mb={12} textAlign="center">
+                Envíame mensaje
+              </Text>
+              <form
+                onSubmit={handleSubmit}
+                style={{ width: "100%", marginBottom: "50px" }}
+              >
+                <Flex
+                  mb={5}
+                  w="100%"
+                  flexDir={["column", "column", "row", "row"]}
                 >
-                  <FormLabel color="primaryMute" htmlFor="email">
-                    Name
-                  </FormLabel>
-                  <Input
+                  <FormControl
+                    isRequired
+                    isInvalid={errors.name}
+                    mr={4}
+                    mb={[2, 2, 0, 0]}
+                  >
+                    <FormLabel color="primaryMute" htmlFor="email">
+                      Nombre
+                    </FormLabel>
+                    <Input
+                      variant="filled"
+                      focusBorderColor="primary"
+                      errorBorderColor="red.300"
+                      color="secondary"
+                      size="lg"
+                      placeholder="Tu nombre..."
+                      onChange={handleChange}
+                      id="name"
+                      type="text"
+                    />
+                    {errors.name ? (
+                      <FormErrorMessage color="red.300" size="sm">
+                        Tu nombre es requerido
+                      </FormErrorMessage>
+                    ) : (
+                      ""
+                    )}
+                    <ValidationError
+                      prefix="Name"
+                      field="name"
+                      errors={state.errors}
+                    />
+                  </FormControl>
+                  <FormControl
+                    isRequired
+                    isInvalid={errors.email}
+                    mb={[2, 2, 0, 0]}
+                  >
+                    <FormLabel color="primaryMute" htmlFor="email">
+                      Correo Electrónico
+                    </FormLabel>
+                    <Input
+                      variant="filled"
+                      focusBorderColor="primary"
+                      errorBorderColor="red.300"
+                      color="secondary"
+                      size="lg"
+                      placeholder="Tu correo electrónico..."
+                      onChange={handleChange}
+                      id="email"
+                      type="email"
+                      name="email"
+                    />
+                    {errors.email ? (
+                      <FormErrorMessage color="red.300" size="sm">
+                        Tu nombre es requerido.
+                      </FormErrorMessage>
+                    ) : (
+                      ""
+                    )}
+                    <ValidationError
+                      prefix="Email"
+                      field="email"
+                      errors={state.errors}
+                    />
+                  </FormControl>
+                </Flex>
+                <FormControl isInvalid={errors.message} mb={10}>
+                  <Textarea
                     variant="filled"
+                    resize="vertical"
                     focusBorderColor="primary"
                     errorBorderColor="red.300"
-                    // borderColor={"whiteAlpha.400"}
                     color="secondary"
-                    size="lg"
-                    placeholder="Your name..."
-                    onChange={handleChange}
-                    id="name"
-                    type="text"
-                  />
-                  {errors.name ? (
-                    <FormErrorMessage color="red.300" size="sm">
-                      Your name is required.
-                    </FormErrorMessage>
-                  ) : (
-                    ""
-                  )}
-                </FormControl>
-                <FormControl
-                  htmlFor="email"
-                  isRequired
-                  isInvalid={errors.email}
-                >
-                  <FormLabel color="primaryMute" htmlFor="email">
-                    Email address
-                  </FormLabel>
-                  <Input
-                    variant="filled"
-                    focusBorderColor="primary"
-                    errorBorderColor="red.300"
                     borderColor={"whiteAlpha.400"}
-                    color="secondary"
                     size="lg"
-                    placeholder="Your Email..."
                     onChange={handleChange}
-                    id="email"
-                    type="email"
+                    id="message"
+                    name="message"
+                    placeholder="Send me a message!"
                   />
-                  {errors.email ? (
+                  {errors.message ? (
                     <FormErrorMessage color="red.300">
-                      Your email is required.
+                      Se requiere un mensaje :)
                     </FormErrorMessage>
                   ) : (
                     ""
                   )}
+                  <ValidationError
+                    prefix="Message"
+                    field="message"
+                    errors={state.errors}
+                  />
                 </FormControl>
+                <motion.button
+                  onHoverStart={() => setHovering(true)}
+                  onHoverEnd={() => setHovering(false)}
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <Button
+                    style={{
+                      display: "flex",
+                      padding: "15px 40px 15px 40px",
+                      borderRadius: "5px",
+                      color: "#EDE8FD",
+                      fontWeight: "500",
+                      background: "#CF2205",
+                    }}
+                    loadingText="Submitting"
+                  >
+                    <button onClick={handleSubmit}>Enviar </button>
+                    <motion.p
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: hovering ? [0, 90, 0] : 0 }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                      style={{ marginLeft: "5px" }}
+                    >
+                      👋
+                    </motion.p>
+                  </Button>
+                </motion.button>
+              </form>
+              <Flex flexDir={"column"}>
+                <Text size="md" mb={10} textAlign="center">
+                  O envíame un dm
+                </Text>
+                <SocialButtons />
               </Flex>
-              <FormControl isInvalid={errors.message} mb={10}>
-                <Textarea
-                  variant="filled"
-                  resize="vertical"
-                  focusBorderColor="primary"
-                  errorBorderColor="red.300"
-                  color="secondary"
-                  borderColor={"whiteAlpha.400"}
-                  size="lg"
-                  onChange={handleChange}
-                  id="message"
-                  placeholder="Send me a message!"
-                />
-                {errors.message ? (
-                  <FormErrorMessage color="red.300">
-                    A message is required :)
-                  </FormErrorMessage>
-                ) : (
-                  ""
-                )}
-              </FormControl>
-              {submitButton}
             </Flex>
           </motion.div>
-          <Box
-            minWidth={["0%", "0%", "15%", "20%"]}
-            display={["none", "none", "block", "block"]}
-          >
-            <ChangePost side={true} url={""} displayButton={false} />
-          </Box>
         </Flex>
       </Flex>
       <Footer />
     </>
-  )
+  );
 }
